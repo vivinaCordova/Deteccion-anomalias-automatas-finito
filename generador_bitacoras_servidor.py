@@ -402,8 +402,9 @@ ax.pie(
 
 ax.set_title("Distribución de sesiones de validación")
 plt.tight_layout()
-plt.show()
-
+# Mostrar gráfico emergente sin bloquear la ejecución
+plt.show(block=False)
+plt.pause(0.5)
 assert conteo["normal"] == 246
 assert conteo["anómala"] == 54
 
@@ -671,3 +672,1365 @@ for nombre in [
 ]:
     if files is not None:
         files.download(str(CARPETA / nombre))
+
+
+"""
+10. Representación de los AFND en Python
+
+Se representan los tres autómatas diseñados en JFLAP
+mediante conjuntos de estados y diccionarios de
+transiciones.
+
+P1 y P2 corresponden a patrones anómalos.
+P3 representa una señal de validación y no determina
+por sí solo la clasificación anómala.
+"""
+
+# ==================================================
+# BLOQUE 10: REPRESENTACIÓN DE LOS AFND
+# ==================================================
+
+def construir_afnd(prefijo, patron):
+    """
+    Construye un AFND que reconoce cualquier cadena
+    que contenga el patrón como subcadena.
+
+    Los estados se nombran según los diagramas
+    utilizados en JFLAP.
+    """
+
+    estados = {
+        f"{prefijo}{i}"
+        for i in range(len(patron) + 1)
+    }
+
+    inicial = f"{prefijo}0"
+    final = f"{prefijo}{len(patron)}"
+
+    transiciones = {}
+
+    # Estado inicial: recorrer la cadena y buscar
+    # posibles comienzos del patrón.
+    for simbolo in ALFABETO:
+
+        destinos = {inicial}
+
+        if simbolo == patron[0]:
+            destinos.add(f"{prefijo}1")
+
+        transiciones[(inicial, simbolo)] = destinos
+
+    # Reconocimiento de los símbolos siguientes
+    for i in range(1, len(patron)):
+
+        estado = f"{prefijo}{i}"
+        simbolo_esperado = patron[i]
+
+        transiciones[
+            (estado, simbolo_esperado)
+        ] = {f"{prefijo}{i + 1}"}
+
+    # Una vez reconocido el patrón, la sesión
+    # permanece aceptada.
+    for simbolo in ALFABETO:
+
+        transiciones[(final, simbolo)] = {final}
+
+    return {
+        "estados": estados,
+        "alfabeto": set(ALFABETO),
+        "inicial": inicial,
+        "finales": {final},
+        "transiciones": transiciones
+    }
+
+
+AFND_P1 = construir_afnd("a", "FFF")
+AFND_P2 = construir_afnd("b", "DD")
+AFND_P3 = construir_afnd("c", "E")
+
+AUTOMATAS = {
+    "P1": AFND_P1,
+    "P2": AFND_P2,
+    "P3": AFND_P3
+}
+
+print("AFND REPRESENTADOS EN PYTHON\n")
+
+for nombre, automata in AUTOMATAS.items():
+
+    print(f"{nombre}")
+    print("Estados:", sorted(automata["estados"]))
+    print("Inicial:", automata["inicial"])
+    print("Finales:", sorted(automata["finales"]))
+
+    numero_transiciones = sum(
+        len(destinos)
+        for destinos in automata["transiciones"].values()
+    )
+
+    print("Transiciones:", numero_transiciones)
+    print()
+
+
+# Verificaciones estructurales
+assert len(AFND_P1["estados"]) == 4
+assert len(AFND_P2["estados"]) == 3
+assert len(AFND_P3["estados"]) == 2
+
+assert AFND_P1["finales"] == {"a3"}
+assert AFND_P2["finales"] == {"b2"}
+assert AFND_P3["finales"] == {"c1"}
+
+print("VERIFICACIÓN ESTRUCTURAL: CORRECTA")
+
+
+# ==================================================
+# BLOQUE 11: SIMULACIÓN DE CADENAS EN LOS AFND
+# ==================================================
+
+def ejecutar_afnd(automata, cadena):
+    """
+    Simula un AFND procesando una cadena símbolo a símbolo.
+
+    Devuelve True si al terminar existe al menos
+    un estado final entre los estados activos.
+    """
+
+    estados_activos = {automata["inicial"]}
+
+    for simbolo in cadena:
+
+        if simbolo not in automata["alfabeto"]:
+            raise ValueError(
+                f"Símbolo '{simbolo}' fuera del alfabeto"
+            )
+
+        siguientes = set()
+
+        for estado in estados_activos:
+
+            destinos = automata["transiciones"].get(
+                (estado, simbolo), set()
+            )
+
+            siguientes.update(destinos)
+
+        estados_activos = siguientes
+
+        if not estados_activos:
+            break
+
+    return bool(
+        estados_activos.intersection(automata["finales"])
+    )
+
+
+# ==================================================
+# PRUEBAS CONTROLADAS
+# ==================================================
+
+CASOS_PRUEBA_AFND = [
+    ("FFF",   True,  False, False),
+    ("FFESAC", False, False, True),
+    ("FDDC",  False, True,  False),
+    ("SDSD",  False, False, False),
+    ("ESAC",  False, False, True),
+    ("FFFDD", True,  True,  False),
+    ("FFFC",  True,  False, False),
+    ("DDFE",  False, True,  True),
+]
+
+print("\nSIMULACIÓN DE LOS AFND")
+print("-" * 62)
+print(
+    f"{'Cadena':<12}"
+    f"{'P1':<10}"
+    f"{'P2':<10}"
+    f"{'P3':<10}"
+    f"{'Resultado'}"
+)
+print("-" * 62)
+
+for cadena, esperado_p1, esperado_p2, esperado_p3 in CASOS_PRUEBA_AFND:
+
+    obtenido = (
+        ejecutar_afnd(AFND_P1, cadena),
+        ejecutar_afnd(AFND_P2, cadena),
+        ejecutar_afnd(AFND_P3, cadena)
+    )
+
+    esperado = (
+        esperado_p1,
+        esperado_p2,
+        esperado_p3
+    )
+
+    correcto = obtenido == esperado
+
+    print(
+        f"{cadena:<12}"
+        f"{str(obtenido[0]):<10}"
+        f"{str(obtenido[1]):<10}"
+        f"{str(obtenido[2]):<10}"
+        f"{'CORRECTO' if correcto else 'ERROR'}"
+    )
+
+    assert correcto, (
+        f"Error al evaluar la cadena {cadena}: "
+        f"esperado={esperado}, obtenido={obtenido}"
+    )
+
+print("-" * 62)
+print("VERIFICACIÓN DEL BLOQUE 11: CORRECTA")
+
+
+
+# ==================================================
+# BLOQUE 12: REPRESENTACIÓN Y EJECUCIÓN DEL AFD MÍNIMO
+# ==================================================
+
+# Transiciones obtenidas del archivo:
+# minimización_AFD_.jff
+
+AFD_MINIMO = {
+    "estados": {"q0", "q1", "q2", "q3", "q4"},
+    "alfabeto": set(ALFABETO),
+    "inicial": "q0",
+    "finales": {"q4"},
+
+    "transiciones": {
+        "q0": {
+            "E": "q4", "F": "q1", "S": "q0",
+            "A": "q0", "D": "q3", "C": "q0",
+            "V": "q0"
+        },
+        "q1": {
+            "E": "q4", "F": "q2", "S": "q0",
+            "A": "q0", "D": "q3", "C": "q0",
+            "V": "q0"
+        },
+        "q2": {
+            "E": "q4", "F": "q4", "S": "q0",
+            "A": "q0", "D": "q3", "C": "q0",
+            "V": "q0"
+        },
+        "q3": {
+            "E": "q4", "F": "q1", "S": "q0",
+            "A": "q0", "D": "q4", "C": "q0",
+            "V": "q0"
+        },
+        "q4": {
+            "E": "q4", "F": "q4", "S": "q4",
+            "A": "q4", "D": "q4", "C": "q4",
+            "V": "q4"
+        }
+    }
+}
+
+
+def ejecutar_afd(automata, cadena):
+    """
+    Ejecuta una cadena sobre un AFD.
+
+    A diferencia del AFND, solamente existe
+    un estado activo durante la ejecución.
+    """
+
+    estado_actual = automata["inicial"]
+
+    for simbolo in cadena:
+
+        if simbolo not in automata["alfabeto"]:
+            raise ValueError(
+                f"Símbolo '{simbolo}' fuera del alfabeto"
+            )
+
+        estado_actual = automata["transiciones"][
+            estado_actual
+        ][simbolo]
+
+    return estado_actual in automata["finales"]
+
+
+# ==================================================
+# VERIFICACIÓN ESTRUCTURAL
+# ==================================================
+
+assert len(AFD_MINIMO["estados"]) == 5
+
+numero_transiciones_afd = sum(
+    len(destinos)
+    for destinos in AFD_MINIMO["transiciones"].values()
+)
+
+assert numero_transiciones_afd == 35
+
+for estado in AFD_MINIMO["estados"]:
+
+    destinos = AFD_MINIMO["transiciones"][estado]
+
+    assert set(destinos) == AFD_MINIMO["alfabeto"]
+
+    assert all(
+        destino in AFD_MINIMO["estados"]
+        for destino in destinos.values()
+    )
+
+print("\nAFD MÍNIMO REPRESENTADO EN PYTHON")
+print("Estados:", sorted(AFD_MINIMO["estados"]))
+print("Inicial:", AFD_MINIMO["inicial"])
+print("Finales:", sorted(AFD_MINIMO["finales"]))
+print("Transiciones:", numero_transiciones_afd)
+
+
+# ==================================================
+# PRUEBAS DE ACEPTACIÓN
+# ==================================================
+
+CASOS_PRUEBA_AFD = [
+    ("FFF", True),
+    ("FFESAC", True),
+    ("FDDC", True),
+    ("SDSD", False),
+    ("ESAC", True),
+    ("FFFDD", True),
+    ("FFFC", True),
+    ("DDFE", True),
+    ("FF", False),
+    ("D", False)
+]
+
+print("\nSIMULACIÓN DEL AFD MÍNIMO")
+print("-" * 45)
+print(f"{'Cadena':<15}{'Aceptada':<12}Resultado")
+print("-" * 45)
+
+for cadena, esperado in CASOS_PRUEBA_AFD:
+
+    obtenido = ejecutar_afd(AFD_MINIMO, cadena)
+
+    correcto = obtenido == esperado
+
+    print(
+        f"{cadena:<15}"
+        f"{str(obtenido):<12}"
+        f"{'CORRECTO' if correcto else 'ERROR'}"
+    )
+
+    assert correcto, (
+        f"Error en cadena {cadena}: "
+        f"esperado={esperado}, obtenido={obtenido}"
+    )
+
+print("-" * 45)
+print("VERIFICACIÓN DEL BLOQUE 12: CORRECTA")
+
+
+# ==================================================
+# BLOQUE 13: MONITOR DE CLASIFICACIÓN DE ANOMALÍAS
+# ==================================================
+
+def monitorizar_sesion(cadena):
+    """
+    Clasifica una sesión utilizando los AFND individuales
+    y comprueba su reconocimiento con el AFD mínimo.
+
+    P1: FFF -> anomalía
+    P2: DD  -> anomalía
+    P3: E   -> validación
+
+    No utiliza etiquetas del generador.
+    """
+
+    # Ejecutar los tres AFND
+    p1 = ejecutar_afnd(AFND_P1, cadena)
+    p2 = ejecutar_afnd(AFND_P2, cadena)
+    p3 = ejecutar_afnd(AFND_P3, cadena)
+
+    # Ejecutar el AFD mínimo
+    aceptacion_afd = ejecutar_afd(AFD_MINIMO, cadena)
+
+    # Ambos modelos deben reconocer la misma unión
+    aceptacion_afnd = p1 or p2 or p3
+
+    if aceptacion_afnd != aceptacion_afd:
+        raise AssertionError(
+            f"AFND y AFD no equivalentes para: {cadena}"
+        )
+
+    # Solo P1 y P2 generan alertas
+    es_anomala = p1 or p2
+
+    patrones = []
+
+    if p1:
+        patrones.append("P1")
+
+    if p2:
+        patrones.append("P2")
+
+    if p3:
+        patrones.append("P3")
+
+    return {
+        "cadena": cadena,
+        "p1": p1,
+        "p2": p2,
+        "p3": p3,
+        "aceptacion_afnd": aceptacion_afnd,
+        "aceptacion_afd": aceptacion_afd,
+        "etiqueta_monitor": (
+            "anómala" if es_anomala else "normal"
+        ),
+        "patrones": patrones
+    }
+
+
+# ==================================================
+# PRUEBAS CONTROLADAS DEL MONITOR
+# ==================================================
+
+CASOS_MONITOR = [
+    ("FFF", "anómala"),
+    ("DD", "anómala"),
+    ("E", "normal"),
+    ("FFESAC", "normal"),
+    ("FFFDD", "anómala"),
+    ("DDFE", "anómala"),
+    ("SDSD", "normal"),
+    ("ESAC", "normal"),
+    ("VFFFFE", "anómala"),
+    ("ESDSDC", "normal")
+]
+
+print("\nMONITOR DE ANOMALÍAS")
+print("-" * 65)
+print(
+    f"{'Cadena':<15}"
+    f"{'Patrones':<20}"
+    f"{'Clasificación':<16}"
+    f"{'Resultado'}"
+)
+print("-" * 65)
+
+for cadena, etiqueta_esperada in CASOS_MONITOR:
+
+    resultado = monitorizar_sesion(cadena)
+
+    etiqueta_obtenida = resultado["etiqueta_monitor"]
+
+    correcto = etiqueta_obtenida == etiqueta_esperada
+
+    patrones = ", ".join(resultado["patrones"])
+
+    print(
+        f"{cadena:<15}"
+        f"{patrones:<20}"
+        f"{etiqueta_obtenida:<16}"
+        f"{'CORRECTO' if correcto else 'ERROR'}"
+    )
+
+    assert correcto, (
+        f"Error al clasificar {cadena}: "
+        f"esperado={etiqueta_esperada}, "
+        f"obtenido={etiqueta_obtenida}"
+    )
+
+print("-" * 65)
+print("VERIFICACIÓN DEL BLOQUE 13: CORRECTA")
+
+
+# ==================================================
+# BLOQUE 14: EVALUACIÓN DEL MONITOR
+# MATRIZ DE CONFUSIÓN Y MÉTRICAS
+# ==================================================
+
+def evaluar_monitor_validacion(datos):
+    """
+    Reconstruye las cadenas de validación y las
+    clasifica mediante los autómatas del monitor.
+
+    Las etiquetas reales se utilizan únicamente
+    para evaluar las predicciones.
+    """
+
+    columnas_necesarias = {
+        "id_sesion", "simbolo", "etiqueta"
+    }
+
+    assert columnas_necesarias.issubset(datos.columns)
+
+    resultados = []
+
+    # Agrupar eventos de cada sesión respetando
+    # el orden en que aparecen en el CSV.
+    for id_sesion, grupo in datos.groupby(
+        "id_sesion", sort=False
+    ):
+
+        # Ordenar los eventos cronológicamente
+        grupo = grupo.sort_values("id_evento")
+
+        cadena = "".join(grupo["simbolo"].astype(str))
+
+        # La predicción proviene exclusivamente
+        # de los autómatas.
+        resultado = monitorizar_sesion(cadena)
+
+        etiqueta_predicha = resultado["etiqueta_monitor"]
+
+        # Etiqueta real: solo para evaluación
+        etiquetas_reales = grupo["etiqueta"].unique()
+
+        assert len(etiquetas_reales) == 1, (
+            f"Etiquetas inconsistentes en {id_sesion}"
+        )
+
+        etiqueta_real = etiquetas_reales[0]
+
+        resultados.append({
+            "id_sesion": id_sesion,
+            "cadena": cadena,
+            "etiqueta_real": etiqueta_real,
+            "etiqueta_predicha": etiqueta_predicha,
+            "p1": resultado["p1"],
+            "p2": resultado["p2"],
+            "p3": resultado["p3"]
+        })
+
+    tabla = pd.DataFrame(resultados)
+
+    assert len(tabla) == 300
+    assert tabla["id_sesion"].nunique() == 300
+
+    # Matriz de confusión
+    vp = int((
+        (tabla["etiqueta_real"] == "anómala") &
+        (tabla["etiqueta_predicha"] == "anómala")
+    ).sum())
+
+    fp = int((
+        (tabla["etiqueta_real"] == "normal") &
+        (tabla["etiqueta_predicha"] == "anómala")
+    ).sum())
+
+    fn = int((
+        (tabla["etiqueta_real"] == "anómala") &
+        (tabla["etiqueta_predicha"] == "normal")
+    ).sum())
+
+    vn = int((
+        (tabla["etiqueta_real"] == "normal") &
+        (tabla["etiqueta_predicha"] == "normal")
+    ).sum())
+
+    assert vp + fp + fn + vn == len(tabla)
+
+    # Métricas
+    precision = vp / (vp + fp) if (vp + fp) else 0.0
+    exhaustividad = vp / (vp + fn) if (vp + fn) else 0.0
+
+    exactitud = (vp + vn) / len(tabla)
+
+    f1 = (
+        2 * precision * exhaustividad /
+        (precision + exhaustividad)
+        if precision + exhaustividad else 0.0
+    )
+
+    metricas = {
+        "VP": vp,
+        "FP": fp,
+        "FN": fn,
+        "VN": vn,
+        "precision": precision,
+        "exhaustividad": exhaustividad,
+        "exactitud": exactitud,
+        "f1": f1
+    }
+
+    return tabla, metricas
+
+
+# ==================================================
+# EJECUCIÓN DEL MONITOR SOBRE VALIDACIÓN
+# ==================================================
+
+tabla_resultados_monitor, metricas_monitor = (
+    evaluar_monitor_validacion(validacion_csv)
+)
+
+print("\n" + "=" * 60)
+print("EVALUACIÓN DEL MONITOR - 300 SESIONES")
+print("=" * 60)
+
+print("\nMATRIZ DE CONFUSIÓN")
+print("-" * 46)
+print(f"{'':<20}{'Pred. anómala':<15}Pred. normal")
+print("-" * 46)
+
+print(
+    f"{'Real anómala':<20}"
+    f"{metricas_monitor['VP']:<15}"
+    f"{metricas_monitor['FN']}"
+)
+
+print(
+    f"{'Real normal':<20}"
+    f"{metricas_monitor['FP']:<15}"
+    f"{metricas_monitor['VN']}"
+)
+
+print("\nMÉTRICAS DEL MONITOR")
+print("-" * 46)
+
+print("VP:", metricas_monitor["VP"])
+print("FP:", metricas_monitor["FP"])
+print("FN:", metricas_monitor["FN"])
+print("VN:", metricas_monitor["VN"])
+
+print(
+    f"Precisión: "
+    f"{metricas_monitor['precision'] * 100:.2f}%"
+)
+
+print(
+    f"Exhaustividad: "
+    f"{metricas_monitor['exhaustividad'] * 100:.2f}%"
+)
+
+print(
+    f"Exactitud: "
+    f"{metricas_monitor['exactitud'] * 100:.2f}%"
+)
+
+print(
+    f"F1-score: "
+    f"{metricas_monitor['f1'] * 100:.2f}%"
+)
+
+print("\nPRIMERAS 10 PREDICCIONES")
+print(
+    tabla_resultados_monitor[
+        [
+            "id_sesion",
+            "cadena",
+            "etiqueta_real",
+            "etiqueta_predicha"
+        ]
+    ].head(10).to_string(index=False)
+)
+
+print("\nVERIFICACIÓN DEL BLOQUE 14: CORRECTA")
+
+# ==================================================
+# BLOQUE 15: COMPARACIÓN DE RENDIMIENTO
+# AFND UNIFICADO VS AFD MÍNIMO
+# ==================================================
+
+from time import perf_counter_ns
+from statistics import median
+
+
+def ejecutar_union_afnd(cadena):
+    """
+    Reconoce la unión de los tres lenguajes.
+
+    Equivale en aceptación a ejecutar los tres
+    AFND conectados mediante un nuevo estado
+    inicial con transiciones epsilon.
+    """
+
+    return (
+        ejecutar_afnd(AFND_P1, cadena)
+        or ejecutar_afnd(AFND_P2, cadena)
+        or ejecutar_afnd(AFND_P3, cadena)
+    )
+
+
+def contar_transiciones_afnd(automata):
+    """
+    Cuenta las transiciones individuales,
+    considerando todos los estados destino.
+    """
+
+    return sum(
+        len(destinos)
+        for destinos in automata["transiciones"].values()
+    )
+
+
+# ==================================================
+# 1. COMPARACIÓN ESTRUCTURAL
+# ==================================================
+
+# Tres AFND individuales y un estado inicial
+# adicional para la unificación mediante epsilon.
+
+estados_afnd_unificado = (
+    len(AFND_P1["estados"])
+    + len(AFND_P2["estados"])
+    + len(AFND_P3["estados"])
+    + 1
+)
+
+# Transiciones de los tres AFND y tres
+# transiciones epsilon desde el nuevo estado.
+
+transiciones_afnd_unificado = (
+    contar_transiciones_afnd(AFND_P1)
+    + contar_transiciones_afnd(AFND_P2)
+    + contar_transiciones_afnd(AFND_P3)
+    + 3
+)
+
+estados_afd = len(AFD_MINIMO["estados"])
+
+transiciones_afd = sum(
+    len(destinos)
+    for destinos in AFD_MINIMO["transiciones"].values()
+)
+
+
+print("\n" + "=" * 65)
+print("BLOQUE 15: COMPARACIÓN AFND VS AFD MÍNIMO")
+print("=" * 65)
+
+print("\nCOMPARACIÓN ESTRUCTURAL")
+print("-" * 45)
+
+print(
+    f"{'Indicador':<25}"
+    f"{'AFND':<10}"
+    f"{'AFD mínimo'}"
+)
+
+print("-" * 45)
+
+print(
+    f"{'Estados':<25}"
+    f"{estados_afnd_unificado:<10}"
+    f"{estados_afd}"
+)
+
+print(
+    f"{'Transiciones':<25}"
+    f"{transiciones_afnd_unificado:<10}"
+    f"{transiciones_afd}"
+)
+
+
+# ==================================================
+# 2. PREPARACIÓN DE LAS CADENAS
+# ==================================================
+
+# Reutilizamos las cadenas reconstruidas del
+# Bloque 14, sin consultar sus etiquetas.
+
+cadenas_validacion = (
+    tabla_resultados_monitor["cadena"].tolist()
+)
+
+assert len(cadenas_validacion) == 300
+
+# Comprobar equivalencia de aceptación
+# antes de medir los tiempos.
+
+for cadena in cadenas_validacion:
+
+    resultado_afnd = ejecutar_union_afnd(cadena)
+
+    resultado_afd = ejecutar_afd(
+        AFD_MINIMO, cadena
+    )
+
+    assert resultado_afnd == resultado_afd, (
+        f"Diferencia de aceptación: {cadena}"
+    )
+
+# Casos adicionales para comprobar rechazos
+# y aceptación fuera del conjunto de validación.
+
+cadenas_control = [
+    "",
+    "F",
+    "FF",
+    "D",
+    "DF",
+    "SDSD",
+    "FFF",
+    "DD",
+    "E",
+    "FFFDD",
+    "DDFE",
+    "FFESAC"
+]
+
+for cadena in cadenas_control:
+
+    assert (
+        ejecutar_union_afnd(cadena)
+        == ejecutar_afd(AFD_MINIMO, cadena)
+    ), f"Diferencia en caso de control: {cadena}"
+
+print("\nEQUIVALENCIA DE ACEPTACIÓN")
+print("Sesiones de validación:", len(cadenas_validacion))
+print("Casos adicionales:", len(cadenas_control))
+print("Resultado: CORRECTO")
+
+
+# ==================================================
+# 3. MEDICIÓN DE TIEMPOS
+# ==================================================
+
+def medir_tiempo_modelo(funcion, cadenas, repeticiones=15):
+    """
+    Mide el tiempo de procesamiento de las
+    mismas cadenas en varias ejecuciones.
+
+    Devuelve la mediana del tiempo total
+    por recorrido de todas las sesiones.
+    """
+
+    mediciones_ms = []
+
+    for _ in range(repeticiones):
+
+        inicio = perf_counter_ns()
+
+        for cadena in cadenas:
+            funcion(cadena)
+
+        fin = perf_counter_ns()
+
+        duracion_ms = (fin - inicio) / 1_000_000
+
+        mediciones_ms.append(duracion_ms)
+
+    return median(mediciones_ms)
+
+
+# Calentamiento previo para reducir el efecto
+# de la primera ejecución.
+
+for cadena in cadenas_validacion:
+    ejecutar_union_afnd(cadena)
+    ejecutar_afd(AFD_MINIMO, cadena)
+
+
+# Medición alternada para reducir el sesgo
+# producido por el orden de las pruebas.
+
+tiempos_afnd = []
+tiempos_afd = []
+
+NUM_RONDAS = 20
+
+for ronda in range(NUM_RONDAS):
+
+    if ronda % 2 == 0:
+
+        tiempos_afnd.append(
+            medir_tiempo_modelo(
+                ejecutar_union_afnd,
+                cadenas_validacion,
+                repeticiones=1
+            )
+        )
+
+        tiempos_afd.append(
+            medir_tiempo_modelo(
+                lambda c: ejecutar_afd(AFD_MINIMO, c),
+                cadenas_validacion,
+                repeticiones=1
+            )
+        )
+
+    else:
+
+        tiempos_afd.append(
+            medir_tiempo_modelo(
+                lambda c: ejecutar_afd(AFD_MINIMO, c),
+                cadenas_validacion,
+                repeticiones=1
+            )
+        )
+
+        tiempos_afnd.append(
+            medir_tiempo_modelo(
+                ejecutar_union_afnd,
+                cadenas_validacion,
+                repeticiones=1
+            )
+        )
+
+
+tiempo_afnd = median(tiempos_afnd)
+tiempo_afd = median(tiempos_afd)
+
+tiempo_medio_afnd = tiempo_afnd / 300
+tiempo_medio_afd = tiempo_afd / 300
+
+
+# ==================================================
+# 4. RESULTADOS
+# ==================================================
+
+print("\nCOMPARACIÓN DE TIEMPOS")
+print("-" * 55)
+
+print("Sesiones evaluadas:", 300)
+print("Rondas de medición:", NUM_RONDAS)
+
+print(
+    f"Tiempo AFND (mediana): "
+    f"{tiempo_afnd:.6f} ms"
+)
+
+print(
+    f"Tiempo AFD (mediana): "
+    f"{tiempo_afd:.6f} ms"
+)
+
+print(
+    f"Tiempo por sesión AFND: "
+    f"{tiempo_medio_afnd:.6f} ms"
+)
+
+print(
+    f"Tiempo por sesión AFD: "
+    f"{tiempo_medio_afd:.6f} ms"
+)
+
+
+if tiempo_afd > 0:
+
+    relacion = tiempo_afnd / tiempo_afd
+
+    print(
+        f"Relación AFND / AFD: "
+        f"{relacion:.2f}x"
+    )
+
+    if relacion > 1:
+        print(
+            "El AFD fue más rápido en esta medición."
+        )
+    elif relacion < 1:
+        print(
+            "El AFND fue más rápido en esta medición."
+        )
+    else:
+        print(
+            "Ambos modelos tuvieron tiempos equivalentes."
+        )
+
+
+# ==================================================
+# 5. TABLA RESUMEN
+# ==================================================
+
+tabla_comparacion = pd.DataFrame([
+    {
+        "Modelo": "AFND unificado",
+        "Estados": estados_afnd_unificado,
+        "Transiciones": transiciones_afnd_unificado,
+        "Tiempo total (ms)": round(tiempo_afnd, 6),
+        "Tiempo por sesión (ms)": round(
+            tiempo_medio_afnd, 6
+        )
+    },
+    {
+        "Modelo": "AFD mínimo",
+        "Estados": estados_afd,
+        "Transiciones": transiciones_afd,
+        "Tiempo total (ms)": round(tiempo_afd, 6),
+        "Tiempo por sesión (ms)": round(
+            tiempo_medio_afd, 6
+        )
+    }
+])
+
+print("\nTABLA FINAL DE COMPARACIÓN")
+print(tabla_comparacion.to_string(index=False))
+
+print("\nVERIFICACIÓN DEL BLOQUE 15: CORRECTA")
+
+
+# ==================================================
+# BLOQUE 16: PANEL VISUAL DEL MONITOR DE SEGURIDAD
+# ==================================================
+
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+from rich.columns import Columns
+from rich.text import Text
+from rich import box
+
+console = Console()
+
+# --------------------------------------------------
+# 1. ENCABEZADO
+# --------------------------------------------------
+
+console.print()
+
+console.print(
+    Panel(
+        "[bold bright_cyan]SECURITY LOG MONITOR[/bold bright_cyan]\n"
+        "[white]Detección de anomalías mediante autómatas finitos[/white]\n"
+        "[green]● SISTEMA OPERATIVO[/green]",
+        title="[bold]SISTEMA DE MONITOREO[/bold]",
+        border_style="bright_cyan",
+        padding=(1, 3),
+        expand=True
+    )
+)
+
+# --------------------------------------------------
+# 2. RESUMEN DE SESIONES
+# --------------------------------------------------
+
+total_sesiones = len(tabla_resultados_monitor)
+
+total_anomalas = (
+    metricas_monitor["VP"] + metricas_monitor["FN"]
+)
+
+total_normales = (
+    metricas_monitor["VN"] + metricas_monitor["FP"]
+)
+
+tarjetas = [
+    Panel(
+        f"[bold white]{total_sesiones}[/bold white]\n"
+        "[cyan]Sesiones evaluadas[/cyan]",
+        border_style="cyan"
+    ),
+    Panel(
+        f"[bold red]{total_anomalas}[/bold red]\n"
+        "[white]Anómalas[/white]",
+        border_style="red"
+    ),
+    Panel(
+        f"[bold green]{total_normales}[/bold green]\n"
+        "[white]Normales[/white]",
+        border_style="green"
+    )
+]
+
+console.print(
+    Columns(tarjetas, equal=True, expand=True)
+)
+
+# --------------------------------------------------
+# 3. PATRONES DEL MONITOR
+# --------------------------------------------------
+
+tabla_patrones = Table(
+    title="PATRONES SUPERVISADOS",
+    box=box.ROUNDED,
+    header_style="bold bright_cyan",
+    expand=True
+)
+
+tabla_patrones.add_column("Patrón", justify="center")
+tabla_patrones.add_column("Secuencia", justify="center")
+tabla_patrones.add_column("Descripción")
+tabla_patrones.add_column("Clasificación")
+
+tabla_patrones.add_row(
+    "P1", "FFF", "Tres fallos consecutivos",
+    "[red]ANOMALÍA[/red]"
+)
+
+tabla_patrones.add_row(
+    "P2", "DD", "Dos denegaciones consecutivas",
+    "[red]ANOMALÍA[/red]"
+)
+
+tabla_patrones.add_row(
+    "P3", "E", "Autenticación exitosa",
+    "[green]VALIDACIÓN[/green]"
+)
+
+console.print(tabla_patrones)
+
+# --------------------------------------------------
+# 4. MATRIZ DE CONFUSIÓN
+# --------------------------------------------------
+
+tabla_confusion = Table(
+    title="MATRIZ DE CONFUSIÓN",
+    box=box.ROUNDED,
+    header_style="bold bright_cyan",
+    expand=True
+)
+
+tabla_confusion.add_column("Etiqueta real")
+tabla_confusion.add_column("Pred. anómala", justify="center")
+tabla_confusion.add_column("Pred. normal", justify="center")
+
+tabla_confusion.add_row(
+    "Anómala",
+    f"[green]{metricas_monitor['VP']} (VP)[/green]",
+    f"[red]{metricas_monitor['FN']} (FN)[/red]"
+)
+
+tabla_confusion.add_row(
+    "Normal",
+    f"[red]{metricas_monitor['FP']} (FP)[/red]",
+    f"[green]{metricas_monitor['VN']} (VN)[/green]"
+)
+
+console.print(tabla_confusion)
+
+# --------------------------------------------------
+# 5. MÉTRICAS
+# --------------------------------------------------
+
+tabla_metricas = Table(
+    title="INDICADORES DE DETECCIÓN",
+    box=box.ROUNDED,
+    header_style="bold bright_cyan",
+    expand=True
+)
+
+tabla_metricas.add_column("Indicador")
+tabla_metricas.add_column("Resultado", justify="right")
+
+for nombre, clave in [
+    ("Precisión", "precision"),
+    ("Exhaustividad", "exhaustividad"),
+    ("Exactitud", "exactitud"),
+    ("F1-score", "f1")
+]:
+    tabla_metricas.add_row(
+        nombre,
+        f"[bold green]{metricas_monitor[clave] * 100:.2f}%[/bold green]"
+    )
+
+console.print(tabla_metricas)
+
+# --------------------------------------------------
+# 6. COMPARACIÓN AFND VS AFD MÍNIMO
+# --------------------------------------------------
+
+tabla_rendimiento = Table(
+    title="COMPARACIÓN DE AUTÓMATAS",
+    box=box.ROUNDED,
+    header_style="bold bright_cyan",
+    expand=True
+)
+
+tabla_rendimiento.add_column("Indicador")
+tabla_rendimiento.add_column("AFND", justify="right")
+tabla_rendimiento.add_column("AFD mínimo", justify="right")
+
+tabla_rendimiento.add_row(
+    "Estados",
+    str(estados_afnd_unificado),
+    str(estados_afd)
+)
+
+tabla_rendimiento.add_row(
+    "Transiciones",
+    str(transiciones_afnd_unificado),
+    str(transiciones_afd)
+)
+
+tabla_rendimiento.add_row(
+    "Tiempo total (ms)",
+    f"{tiempo_afnd:.4f}",
+    f"{tiempo_afd:.4f}"
+)
+
+tabla_rendimiento.add_row(
+    "Tiempo por sesión (ms)",
+    f"{tiempo_medio_afnd:.6f}",
+    f"{tiempo_medio_afd:.6f}"
+)
+
+console.print(tabla_rendimiento)
+
+# --------------------------------------------------
+# 7. RESUMEN FINAL
+# --------------------------------------------------
+
+factor = (
+    tiempo_afnd / tiempo_afd
+    if tiempo_afd > 0 else 0
+)
+
+console.print(
+    Panel(
+        "[bold green]EVALUACIÓN COMPLETADA[/bold green]\n\n"
+        f"Sesiones analizadas: {total_sesiones}\n"
+        f"Precisión: {metricas_monitor['precision'] * 100:.2f}%\n"
+        f"Exhaustividad: {metricas_monitor['exhaustividad'] * 100:.2f}%\n"
+        f"Relación de tiempos AFND/AFD: {factor:.2f}x\n\n"
+        "[dim]Resultados obtenidos sobre bitácoras sintéticas.[/dim]",
+        title="[bold]RESULTADO DEL MONITOR[/bold]",
+        border_style="green",
+        padding=(1, 2)
+    )
+)
+
+print("\nVERIFICACIÓN DEL BLOQUE 16: CORRECTA")
+
+
+# ==================================================
+# BLOQUE 17: TRAZABILIDAD VISUAL DE LOS AFND
+# ==================================================
+
+from rich.table import Table
+from rich.panel import Panel
+from rich import box
+
+
+def obtener_traza_afnd(automata, cadena):
+    """
+    Registra los estados activos después de consumir
+    cada símbolo de la cadena.
+
+    No modifica el autómata ni sus transiciones.
+    """
+
+    estados = {automata["inicial"]}
+
+    traza = [{
+        "paso": 0,
+        "simbolo": "Inicio",
+        "estados": sorted(estados),
+        "acepta": bool(
+            estados.intersection(automata["finales"])
+        )
+    }]
+
+    for indice, simbolo in enumerate(cadena, start=1):
+
+        if simbolo not in automata["alfabeto"]:
+            raise ValueError(
+                f"Símbolo fuera del alfabeto: {simbolo}"
+            )
+
+        siguientes = set()
+
+        for estado in estados:
+            siguientes.update(
+                automata["transiciones"].get(
+                    (estado, simbolo), set()
+                )
+            )
+
+        estados = siguientes
+
+        traza.append({
+            "paso": indice,
+            "simbolo": simbolo,
+            "estados": sorted(estados),
+            "acepta": bool(
+                estados.intersection(automata["finales"])
+            )
+        })
+
+    return traza
+
+
+def mostrar_traza_afnd(nombre, automata, cadena):
+    """
+    Presenta una tabla visual con Rich.
+    """
+
+    traza = obtener_traza_afnd(automata, cadena)
+    aceptada = traza[-1]["acepta"]
+
+    tabla = Table(
+        title=f"RECORRIDO DEL AUTÓMATA {nombre}",
+        box=box.ROUNDED,
+        header_style="bold bright_cyan",
+        expand=True
+    )
+
+    tabla.add_column("Paso", justify="center")
+    tabla.add_column("Símbolo", justify="center")
+    tabla.add_column("Estados activos")
+    tabla.add_column("Estado final", justify="center")
+
+    for fila in traza:
+
+        estados_texto = (
+            "{" + ", ".join(fila["estados"]) + "}"
+        )
+
+        final_texto = (
+            "[green]SÍ[/green]"
+            if fila["acepta"]
+            else "[dim]NO[/dim]"
+        )
+
+        tabla.add_row(
+            str(fila["paso"]),
+            fila["simbolo"],
+            estados_texto,
+            final_texto
+        )
+
+    console.print()
+    console.print(
+        Panel(
+            f"[bold]Cadena evaluada:[/bold] {cadena}\n"
+            f"[bold]Autómata:[/bold] {nombre}\n"
+            f"[bold]Resultado:[/bold] "
+            + (
+                "[green]ACEPTADA[/green]"
+                if aceptada
+                else "[yellow]RECHAZADA[/yellow]"
+            ),
+            border_style=(
+                "green" if aceptada else "yellow"
+            )
+        )
+    )
+
+    console.print(tabla)
+
+    # Comprobación contra el simulador del Bloque 11
+    assert aceptada == ejecutar_afnd(automata, cadena)
+
+    return aceptada
+
+
+# ==================================================
+# DEMOSTRACIÓN PARA LA EXPOSICIÓN
+# ==================================================
+
+console.print(
+    Panel.fit(
+        "[bold bright_cyan]"
+        "DEMOSTRACIÓN DEL RECORRIDO DE ESTADOS"
+        "[/bold bright_cyan]",
+        border_style="bright_cyan"
+    )
+)
+
+# Sesión anómala: tres fallos consecutivos
+mostrar_traza_afnd(
+    "P1 - TRES FALLOS CONSECUTIVOS",
+    AFND_P1,
+    "FFF"
+)
+
+# Sesión normal: no contiene FFF
+mostrar_traza_afnd(
+    "P1 - SESIÓN SIN ANOMALÍA P1",
+    AFND_P1,
+    "FFESAC"
+)
+
+print("\nVERIFICACIÓN DEL BLOQUE 17: CORRECTA")
+
+
+plt.show(block=True)
