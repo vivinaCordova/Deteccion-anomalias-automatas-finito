@@ -7,7 +7,132 @@ La verificación compara el orden de los símbolos, las etiquetas, los patrones
 y la correspondencia entre eventos, garantizando que los datos no se alteren
 antes de exportarlos a CSV.
 """
+# ==================================================
+# BLOQUE 4: CONSTRUCCIÓN DE SESIONES SINTÉTICAS
+# ==================================================
 
+LONGITUD_MINIMA = 3
+LONGITUD_MAXIMA = 20
+
+def generar_sesion(g):
+    """Genera una cadena con eventos del alfabeto."""
+    longitud = g.entero(LONGITUD_MINIMA, LONGITUD_MAXIMA)
+
+    eventos = []
+    for _ in range(longitud):
+        indice = g.entero(0, len(ALFABETO) - 1)
+        eventos.append(ALFABETO[indice])
+
+    return "".join(eventos)
+
+
+# Generador independiente para esta prueba
+g_sesiones = GeneradorLCG(semilla=2026)
+
+print("SESIONES SINTÉTICAS DE PRUEBA\n")
+
+for i in range(1, 6):
+    sesion = generar_sesion(g_sesiones)
+
+    assert LONGITUD_MINIMA <= len(sesion) <= LONGITUD_MAXIMA
+    assert all(simbolo in ALFABETO for simbolo in sesion)
+
+    print(f"S-{i:04d} | {sesion} | Longitud: {len(sesion)}")
+
+print("\nVERIFICACIÓN")
+print("Alfabeto y longitudes: CORRECTOS")
+
+"""
+## Bloque 5. Detección y clasificación de patrones
+
+Se implementan las condiciones de reconocimiento de los cuatro lenguajes formales. Una sesión se clasifica como anómala si cumple P1, P2 o P3; el patrón P4 registra la presencia de una autenticación exitosa.
+"""
+
+# ==================================================
+# BLOQUE 5: DETECCIÓN Y CLASIFICACIÓN DE PATRONES
+# ==================================================
+
+def detectar_patrones(cadena):
+    """Identifica los patrones presentes en una sesión."""
+
+    # P1: contiene tres fallos consecutivos
+    p1 = "FFF" in cadena
+
+    # P2: existe una solicitud antes de cualquier E
+    autenticado = False
+    p2 = False
+
+    for simbolo in cadena:
+        if simbolo == "E":
+            autenticado = True
+        elif simbolo == "S" and not autenticado:
+            p2 = True
+            break
+
+    # P3: contiene dos denegaciones consecutivas
+    p3 = "DD" in cadena
+
+    # P4: contiene al menos una autenticación exitosa
+    p4 = "E" in cadena
+
+    return {
+        "P1": p1,
+        "P2": p2,
+        "P3": p3,
+        "P4": p4
+    }
+
+
+def clasificar_sesion(cadena):
+    """Clasifica la sesión utilizando P1, P2 y P3."""
+
+    patrones = detectar_patrones(cadena)
+
+    etiqueta = (
+        "anómala"
+        if any(patrones[p] for p in ("P1", "P2", "P3"))
+        else "normal"
+    )
+
+    return etiqueta, patrones
+
+
+# Casos de prueba con resultados conocidos
+casos = [
+    ("FFF", "anómala"),
+    ("FFESAC", "normal"),
+    ("SAC", "anómala"),
+    ("ESAC", "normal"),
+    ("FDDC", "anómala"),
+    ("SDSD", "anómala"),
+    ("FFEC", "normal")
+]
+
+print("VERIFICACIÓN DE PATRONES\n")
+
+for cadena, esperado in casos:
+    etiqueta, patrones = clasificar_sesion(cadena)
+
+    assert etiqueta == esperado
+
+    detectados = [
+        p for p, valor in patrones.items() if valor
+    ]
+
+    print(
+        f"{cadena:<10} | {etiqueta:<8} | "
+        f"Patrones: {', '.join(detectados) or 'Ninguno'}"
+    )
+
+print("\nVERIFICACIÓN: CORRECTA")
+
+"""
+## Bloque 6. Generación controlada de sesiones
+
+Se construyen sesiones normales, anómalas y casi anómalas utilizando el LCG y los patrones definidos. Cada cadena se verifica mediante el clasificador del Bloque 5 para garantizar la coherencia de sus etiquetas.
+
+Los casos casi anómalos contienen secuencias similares a las anomalías, pero sin cumplir completamente sus condiciones.
+"""
 
 # ==================================================
 # BLOQUE 9.2: VERIFICACIÓN DE INTEGRIDAD DEL CSV
