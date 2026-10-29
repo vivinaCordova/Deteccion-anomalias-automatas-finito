@@ -594,8 +594,11 @@ try:
 except ImportError:
     files = None
 
-# Carpeta de salida
-CARPETA = Path("/content/datos")
+# Carpeta de salida: /content/datos en Colab, ./datos en ejecución local
+if files is not None:
+    CARPETA = Path("/content/datos")
+else:
+    CARPETA = Path(__file__).resolve().parent / "datos"
 CARPETA.mkdir(parents=True, exist_ok=True)
 
 # 1. Validación: contiene etiquetas

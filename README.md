@@ -125,13 +125,24 @@ git clone https://github.com/vivinaCordova/Deteccion-anomalias-automatas-finito.
 cd Deteccion-anomalias-automatas-finito
 ```
 
-### 2. Preparar el entorno virtual (recomendado)
+### 2. Crear y activar el entorno virtual
+
+El entorno virtual `.venv` aísla las dependencias del proyecto de las instaladas en el sistema. Se crea una sola vez; después solo es necesario activarlo en cada nueva terminal.
 
 **Windows — PowerShell**
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+```
+
+> Si PowerShell bloquea la activación por la política de ejecución, ejecuta una vez `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` y vuelve a intentarlo.
+
+**Windows — CMD**
+
+```bat
+python -m venv .venv
+.venv\Scripts\activate.bat
 ```
 
 **Linux / macOS**
@@ -141,11 +152,24 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
+Con el entorno activo, la terminal muestra el prefijo `(.venv)`. Para salir del entorno, ejecuta `deactivate`.
+
 ### 3. Instalar dependencias
 
+Con el entorno virtual activo, instala las dependencias listadas en `requirements.txt`:
+
 ```bash
-python -m pip install pandas matplotlib rich
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
+
+Para comprobar la instalación:
+
+```bash
+python -c "import pandas, matplotlib, rich; print('Dependencias instaladas correctamente')"
+```
+
+> La carpeta `.venv/` está incluida en `.gitignore` y no se sube al repositorio; cada integrante debe crear su propio entorno.
 
 ### 4. Ejecutar el monitor
 
