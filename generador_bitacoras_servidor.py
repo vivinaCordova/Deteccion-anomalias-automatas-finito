@@ -1,3 +1,109 @@
+# ==================================================
+# BLOQUE 2: CONFIGURACIÓN DEL ALFABETO Y PATRONES
+# ==================================================
+
+# Alfabeto del servidor
+ALFABETO = ("E", "F", "S", "A", "D", "C", "V")
+
+# Diccionario de eventos
+EVENTOS = {
+    "E": "Inicio de sesión exitoso",
+    "F": "Inicio de sesión fallido",
+    "S": "Solicitud de recurso",
+    "A": "Permiso concedido",
+    "D": "Acceso denegado",
+    "C": "Cierre de sesión",
+    "V": "Visualización de información pública"
+}
+
+# Patrones definidos en el modelo formal
+PATRONES = {
+    "P1": {
+        "descripcion": "Tres intentos fallidos consecutivos",
+        "tipo": "Anomalía"
+    },
+    "P2": {
+        "descripcion": "Solicitud sin autenticación previa",
+        "tipo": "Anomalía"
+    },
+    "P3": {
+        "descripcion": "Dos accesos denegados consecutivos",
+        "tipo": "Anomalía"
+    },
+    "P4": {
+        "descripcion": "Autenticación exitosa",
+        "tipo": "Validación"
+    }
+}
+
+# Verificación del alfabeto
+assert 5 <= len(ALFABETO) <= 8
+assert len(set(ALFABETO)) == len(ALFABETO)
+
+# Mostrar configuración
+print("ALFABETO DEL SERVIDOR")
+print("Σ = {" + ", ".join(ALFABETO) + "}")
+print("Total de símbolos:", len(ALFABETO))
+
+print("\nDICCIONARIO DE EVENTOS")
+for simbolo, descripcion in EVENTOS.items():
+    print(f"{simbolo}: {descripcion}")
+
+print("\nPATRONES DEFINIDOS")
+for codigo, datos in PATRONES.items():
+    print(f"{codigo}: {datos['descripcion']} ({datos['tipo']})")
+
+
+# ==================================================
+# BLOQUE 3: GENERADOR LINEAL CONGRUENCIAL (LCG)
+# ==================================================
+
+class GeneradorLCG:
+    def __init__(self, semilla=2026):
+        self.semilla = semilla
+        self.estado = semilla
+
+        # Parámetros del generador
+        self.a = 1664525
+        self.c = 1013904223
+        self.m = 2**32
+
+    def siguiente(self):
+        self.estado = (self.a * self.estado + self.c) % self.m
+        return self.estado
+
+    def entero(self, minimo, maximo):
+        """Genera un entero dentro del intervalo indicado."""
+        return minimo + self.siguiente() % (maximo - minimo + 1)
+
+
+# Inicializar el generador
+generador = GeneradorLCG(semilla=2026)
+
+print("GENERADOR LINEAL CONGRUENCIAL")
+print(f"Semilla inicial: {generador.semilla}")
+print(f"Multiplicador (a): {generador.a}")
+print(f"Incremento (c): {generador.c}")
+print(f"Módulo (m): {generador.m}")
+
+print("\nPRIMEROS 5 VALORES GENERADOS")
+for i in range(5):
+    print(f"X{i+1} = {generador.siguiente()}")
+
+
+# Verificar reproducibilidad
+g1 = GeneradorLCG(2026)
+g2 = GeneradorLCG(2026)
+
+secuencia1 = [g1.siguiente() for _ in range(10)]
+secuencia2 = [g2.siguiente() for _ in range(10)]
+
+assert secuencia1 == secuencia2
+
+print("\nVERIFICACIÓN")
+print("Reproducibilidad: CORRECTA")
+
+
 """9.2. Verificación de integridad de los registros.
 
 Se comprueba que las 350 sesiones conserven sus cadenas originales después
