@@ -169,8 +169,7 @@ for i in range(1, 6):
 
     print(f"S-{i:04d} | {sesion} | Longitud: {len(sesion)}")
 
-print("\nVERIFICACIÓN")
-print("Alfabeto y longitudes: CORRECTOS")
+print("print("Alfabeto y longitudes: CORRECTOS")
 
 """## Bloque 5. Detección y clasificación de tres patrones
 
@@ -205,34 +204,68 @@ Se comprueban ejemplos normales, casi anómalos, P1 y P2. P3 corresponde a valid
 """
 
 # BLOQUE 6: DEMOSTRACIÓN CONTROLADA DEL MODELO CORREGIDO
+
 PLANTILLAS = {
-    "normal": ["ESAC", "FFESAC", "EVSAC", "ESDSAC", "EFSAC"],
-    "casi_anomala": ["FFESAC", "ESDSDC", "EFSAC", "FFEVSAC"],
-    "P1": ["FFFESAC", "VFFFEC", "EFFFSC", "FFFFE"],
-    "P2": ["ESDDC", "ESDDAC", "EDDC", "FESDDC"]
+    "normal": ["ESAC", "ESDC", "EVSAC", "FESAC"],
+    "casi_anomala": ["FFESAC", "FFESDC", "ESDSDC", "FFEVSAC"],
+    "P1": ["FFFESAC", "VFFFESDC", "FFFESDSAC", "FFFFESAC"],
+    "P2": ["ESDDC", "ESDDSAC", "FESDDC", "ESASDDC"]
 }
 def seleccionar(g, opciones):
     return opciones[(g.siguiente() >> 8) % len(opciones)]
 def construir_sesion(g, tipo, patron=None):
     if tipo == "anómala" and patron in PATRONES_ANOMALOS:
         categoria = patron
-    elif tipo in ("normal", "casi_anomala"):
+    elif tipo in ("normal", "casi_anomala") and patron is None:
         categoria = tipo
     else:
         raise ValueError("Combinación de tipo y patrón inválida")
-    base = seleccionar(g, PLANTILLAS[categoria])
-    cadena = "V" * ((g.siguiente() >> 8) % 2) + base + "V" * ((g.siguiente() >> 8) % 2)
-    etiqueta, patrones = clasificar_sesion(cadena)
-    assert etiqueta == ("anómala" if tipo == "anómala" else "normal")
-    assert 3 <= len(cadena) <= 20
-    if patron: assert patrones[patron]
-    return cadena, etiqueta, patrones
 
+    base = seleccionar(g, PLANTILLAS[categoria])
+    prefijo = "V" * ((g.siguiente() >> 8) % 2)
+    sufijo = "V" * ((g.siguiente() >> 8) % 2)
+    cadena = prefijo + base + sufijo
+
+    etiqueta, patrones = clasificar_sesion(cadena)
+    esperada = "anómala" if tipo == "anómala" else "normal"
+
+    assert etiqueta == esperada
+    assert 3 <= len(cadena) <= 20
+    assert set(cadena).issubset(ALFABETO)
+
+    if patron is not None:
+        assert patrones[patron]
+
+    if categoria == "casi_anomala":
+        assert not any(patrones[p] for p in PATRONES_ANOMALOS)
+
+    return cadena, etiqueta, patrones
 g_controlado = GeneradorLCG(2026)
-for tipo, patron in [("normal",None),("anómala","P1"),("anómala","P2"),("casi_anomala",None)]:
+
+casos_demostracion = [
+    ("normal", None),
+    ("anómala", "P1"),
+    ("anómala", "P2"),
+    ("casi_anomala", None)
+]
+print(f"{'Categoría':<17}{'Cadena':<22}{'Etiqueta':<12}P1   P2   P3")
+print("-" * 74)
+for tipo, patron in casos_demostracion:
     for _ in range(3):
-        print(tipo, patron, construir_sesion(g_controlado,tipo,patron))
-print("GENERACIÓN DE DEMOSTRACIÓN: CORRECTA")
+        cadena, etiqueta, patrones = construir_sesion(
+            g_controlado, tipo, patron
+        )
+
+        print(
+            f"{(patron or tipo):<17}"
+            f"{cadena:<22}"
+            f"{etiqueta:<12}"
+            f"{int(patrones['P1']):<5}"
+            f"{int(patrones['P2']):<5}"
+            f"{int(patrones['P3'])}"
+        )
+print("VERIFICACIÓN CORRECTA")
+
 
 """## Bloque 7. Generación definitiva de validación y prueba
 
@@ -240,100 +273,231 @@ Se generan 300 sesiones de validación y 50 de prueba con el LCG y semilla 2026.
 """
 
 # BLOQUE 7: CONJUNTOS REPRODUCIBLES SEGÚN LOS TRES PATRONES DE JFLAP
+
 SEMILLA_DATOS = 2026
 TOTAL_VALIDACION = 300
 TOTAL_PRUEBA = 50
 PORCENTAJE_ANOMALIAS = 0.18
+MAX_INTENTOS = 100000
+
 g_datos = GeneradorLCG(SEMILLA_DATOS)
 cadenas_utilizadas = set()
 
 def secuencia_base(categoria):
-    cadena = ""
+    if categoria not in ("normal", "casi_anomala", "P1", "P2"):
+        raise ValueError(f"Categoría inválida: {categoria}")
+
     if categoria == "P1":
-        cadena += "F" * g_datos.entero(3,4)
+        cadena = "F" * g_datos.entero(3, 4)
     elif categoria == "casi_anomala":
-        cadena += "FF"
+        cadena = "FF"
     else:
-        cadena += "F" * g_datos.entero(0,2)
+        cadena = "F" * g_datos.entero(0, 2)
+
     cadena += "E"
-    operaciones = g_datos.entero(1,4)
-    indice_doble = g_datos.entero(0,operaciones-1) if categoria == "P2" else -1
+    operaciones = g_datos.entero(1, 4)
+    indice_doble = (
+        g_datos.entero(0, operaciones - 1)
+        if categoria == "P2" else -1
+    )
+
     for i in range(operaciones):
         cadena += "S"
+
         if i == indice_doble:
-            cadena += "DD"  # anomalía intencional: rechazo duplicado en bitácora
+            cadena += "DD"
         else:
-            cadena += "A" if g_datos.entero(0,99) >= 55 else "D"
+            cadena += "A" if g_datos.entero(0, 99) >= 55 else "D"
+
     return cadena + "C"
 
 def insertar_eventos_publicos(g, base):
-    resultado=[]
+    resultado = []
+
     for i, simbolo in enumerate(base):
-        if i>0 and not (simbolo==base[i-1] and simbolo in ("F","D")):
-            if g.entero(1,100)<=15: resultado.append("V")
+        protegido = (
+            i > 0
+            and simbolo == base[i - 1]
+            and simbolo in ("F", "D")
+        )
+
+        if i > 0 and not protegido and g.entero(1, 100) <= 15:
+            resultado.append("V")
+
         resultado.append(simbolo)
-    if g.entero(1,100)<=12: resultado.append("V")
+
+    if g.entero(1, 100) <= 12:
+        resultado.append("V")
+
     return "".join(resultado)
 
 def comprobar_coherencia(cadena, categoria):
-    problemas=[]; autenticado=False; pendiente=False
-    for i,simbolo in enumerate(cadena):
-        if simbolo=="E": autenticado=True
-        elif simbolo=="C":
-            if not autenticado or pendiente: problemas.append("C incorrecto")
-            autenticado=False
-        elif simbolo=="S":
-            if pendiente: problemas.append("S pendiente")
-            pendiente=True
-        elif simbolo in "AD":
-            if pendiente: pendiente=False
-            elif not (categoria=="P2" and simbolo=="D" and i>0 and cadena[i-1]=="D"):
+    problemas = []
+    autenticado = False
+    pendiente = False
+    cerrado = False
+
+    for i, simbolo in enumerate(cadena):
+        if simbolo == "E":
+            if autenticado:
+                problemas.append("Autenticación repetida")
+            autenticado = True
+
+        elif simbolo == "C":
+            if not autenticado or pendiente:
+                problemas.append("Cierre incorrecto")
+            autenticado = False
+            cerrado = True
+
+        elif simbolo == "S":
+            if not autenticado or pendiente:
+                problemas.append("Solicitud incorrecta")
+            pendiente = True
+
+        elif simbolo in ("A", "D"):
+            if pendiente:
+                pendiente = False
+            elif not (
+                categoria == "P2"
+                and simbolo == "D"
+                and i > 0
+                and cadena[i - 1] == "D"
+            ):
                 problemas.append("Respuesta sin solicitud")
-    if pendiente: problemas.append("Solicitud sin respuesta")
+
+    if pendiente:
+        problemas.append("Solicitud sin respuesta")
+
+    if autenticado or not cerrado:
+        problemas.append("Sesión sin cierre válido")
+
     return problemas
 
 def generar_cadena_unica(categoria):
-    for _ in range(100000):
-        cadena=insertar_eventos_publicos(g_datos,secuencia_base(categoria))
-        if not 3<=len(cadena)<=20 or cadena in cadenas_utilizadas: continue
-        etiqueta,patrones=clasificar_sesion(cadena)
-        esperado="anómala" if categoria in PATRONES_ANOMALOS else "normal"
-        if etiqueta != esperado: continue
-        if categoria in PATRONES_ANOMALOS and not patrones[categoria]: continue
-        if comprobar_coherencia(cadena,categoria): continue
+    for _ in range(MAX_INTENTOS):
+        base = secuencia_base(categoria)
+        cadena = insertar_eventos_publicos(g_datos, base)
+
+        if not 3 <= len(cadena) <= 20:
+            continue
+
+        if cadena in cadenas_utilizadas:
+            continue
+
+        if not set(cadena).issubset(ALFABETO):
+            continue
+
+        etiqueta, patrones = clasificar_sesion(cadena)
+        esperada = (
+            "anómala"
+            if categoria in PATRONES_ANOMALOS
+            else "normal"
+        )
+
+        if etiqueta != esperada:
+            continue
+
+        if categoria in PATRONES_ANOMALOS and not patrones[categoria]:
+            continue
+
+        if comprobar_coherencia(cadena, categoria):
+            continue
+
         cadenas_utilizadas.add(cadena)
-        return {"cadena":cadena,"longitud":len(cadena),"etiqueta":etiqueta,
-                "tipo_patron":",".join(p for p in PATRONES_ANOMALOS if patrones[p]) or "Ninguno",
-                "validacion_P3":patrones["P3"],"categoria":categoria}
-    raise RuntimeError("No se pudo obtener cadena única para "+categoria)
 
-def generar_conjunto(total,nombre):
-    n_anomalas=round(total*PORCENTAJE_ANOMALIAS)
-    n_normales=total-n_anomalas
-    n_casi=round(n_normales*.25)
-    categorias=[PATRONES_ANOMALOS[i%2] for i in range(n_anomalas)]
-    categorias += ["casi_anomala"]*n_casi + ["normal"]*(n_normales-n_casi)
-    registros=[generar_cadena_unica(c) for c in categorias]
-    for i in range(len(registros)-1,0,-1):
-        j=g_datos.entero(0,i)
-        registros[i],registros[j]=registros[j],registros[i]
-    prefijo="V" if nombre=="validacion" else "T"
-    for i,r in enumerate(registros,1): r["id_sesion"]=f"{prefijo}-{i:04d}"
+        return {
+            "cadena": cadena,
+            "longitud": len(cadena),
+            "etiqueta": etiqueta,
+            "tipo_patron": ",".join(
+                p for p in PATRONES_ANOMALOS if patrones[p]
+            ) or "Ninguno",
+            "validacion_P3": patrones["P3"],
+            "categoria": categoria
+        }
+
+    raise RuntimeError(
+        f"No se pudo generar una cadena única para {categoria}"
+    )
+
+def generar_conjunto(total, nombre):
+    n_anomalas = round(total * PORCENTAJE_ANOMALIAS)
+    n_normales = total - n_anomalas
+    n_casi = round(n_normales * 0.25)
+
+    categorias = [
+        PATRONES_ANOMALOS[i % len(PATRONES_ANOMALOS)]
+        for i in range(n_anomalas)
+    ]
+
+    categorias += (
+        ["casi_anomala"] * n_casi
+        + ["normal"] * (n_normales - n_casi)
+    )
+
+    registros = [
+        generar_cadena_unica(categoria)
+        for categoria in categorias
+    ]
+
+    for i in range(len(registros) - 1, 0, -1):
+        j = g_datos.entero(0, i)
+        registros[i], registros[j] = registros[j], registros[i]
+
+    prefijo = "V" if nombre == "validacion" else "T"
+
+    for i, registro in enumerate(registros, 1):
+        registro["id_sesion"] = f"{prefijo}-{i:04d}"
+
     return registros
+datos_validacion = generar_conjunto(TOTAL_VALIDACION, "validacion")
+datos_prueba = generar_conjunto(TOTAL_PRUEBA, "prueba")
+todos_registros = datos_validacion + datos_prueba
+assert len(datos_validacion) == TOTAL_VALIDACION
+assert len(datos_prueba) == TOTAL_PRUEBA
+assert len(cadenas_utilizadas) == len(todos_registros) == 350
+assert len({r["cadena"] for r in todos_registros}) == 350
+assert len({r["id_sesion"] for r in todos_registros}) == 350
+assert all(
+    3 <= r["longitud"] <= 20
+    and r["longitud"] == len(r["cadena"])
+    and set(r["cadena"]).issubset(ALFABETO)
+    and clasificar_sesion(r["cadena"])[0] == r["etiqueta"]
+    and not comprobar_coherencia(r["cadena"], r["categoria"])
+    for r in todos_registros
+)
+for nombre, registros in [
+    ("VALIDACIÓN", datos_validacion),
+    ("PRUEBA", datos_prueba)
+]:
+    anomalas = sum(
+        r["etiqueta"] == "anómala"
+        for r in registros
+    )
 
-datos_validacion=generar_conjunto(TOTAL_VALIDACION,"validacion")
-datos_prueba=generar_conjunto(TOTAL_PRUEBA,"prueba")
-todos_registros=datos_validacion+datos_prueba
-assert len(cadenas_utilizadas)==350
-for nombre,registros in [("VALIDACIÓN",datos_validacion),("PRUEBA",datos_prueba)]:
-    anom=sum(r["etiqueta"]=="anómala" for r in registros)
-    print(nombre,"sesiones:",len(registros),"anómalas:",anom,"normales:",len(registros)-anom)
-    for patron in PATRONES: print(patron, sum(detectar_patrones(r["cadena"])[patron] for r in registros))
-    assert round(len(registros)*.18)==anom
-    assert all(not comprobar_coherencia(r["cadena"],r["categoria"]) for r in registros)
-print("Eventos:",sum(len(r["cadena"]) for r in todos_registros))
-print("Eventos V:",sum(r["cadena"].count("V") for r in todos_registros))
-print("350 cadenas únicas y etiquetas consistentes: CORRECTO")
+    normales = len(registros) - anomalas
+
+    assert anomalas == round(
+        len(registros) * PORCENTAJE_ANOMALIAS
+    )
+    print(f"\n{nombre}")
+    print(f"Sesiones: {len(registros)}")
+    print(f"Normales: {normales}")
+    print(f"Anómalas: {anomalas}")
+    print(f"Porcentaje: {anomalas / len(registros) * 100:.2f}%")
+
+    for patron in PATRONES:
+        cantidad = sum(
+            detectar_patrones(r["cadena"])[patron]
+            for r in registros
+        )
+        print(f"{patron}: {cantidad}")
+print("\nRESUMEN GENERAL")
+print("Cadenas únicas:", len(cadenas_utilizadas))
+print("Eventos:", sum(len(r["cadena"]) for r in todos_registros))
+print("Eventos V:", sum(r["cadena"].count("V") for r in todos_registros))
+print("VERIFICACIÓN DEL BLOQUE 7: CORRECTA")
+
 
 """## Bloque 8. Auditoría de datos mediante pandas
 
