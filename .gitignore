@@ -15,12 +15,6 @@ __pycache__/
 # Checkpoints de Jupyter / Colab
 .ipynb_checkpoints/
 
-# Salidas generadas por el script (se pueden regenerar con la semilla fija)
-datos/
-validacion.csv
-prueba.csv
-clave_prueba.csv
-
 # Variables de entorno y credenciales
 .env
 .env.*

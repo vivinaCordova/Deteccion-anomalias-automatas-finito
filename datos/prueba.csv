@@ -1,0 +1,541 @@
+﻿id_evento,fecha_hora,id_sesion,actor,evento,simbolo
+1,2026-10-20 08:00:00,T-0001,TST-0001,Inicio de sesión fallido,F
+2,2026-10-20 08:00:03,T-0001,TST-0001,Inicio de sesión exitoso,E
+3,2026-10-20 08:00:06,T-0001,TST-0001,Solicitud de recurso,S
+4,2026-10-20 08:00:09,T-0001,TST-0001,Acceso denegado,D
+5,2026-10-20 08:00:12,T-0001,TST-0001,Solicitud de recurso,S
+6,2026-10-20 08:00:15,T-0001,TST-0001,Visualización de información pública,V
+7,2026-10-20 08:00:18,T-0001,TST-0001,Permiso concedido,A
+8,2026-10-20 08:00:21,T-0001,TST-0001,Solicitud de recurso,S
+9,2026-10-20 08:00:24,T-0001,TST-0001,Permiso concedido,A
+10,2026-10-20 08:00:27,T-0001,TST-0001,Cierre de sesión,C
+11,2026-10-20 08:05:00,T-0002,TST-0002,Inicio de sesión fallido,F
+12,2026-10-20 08:05:03,T-0002,TST-0002,Inicio de sesión fallido,F
+13,2026-10-20 08:05:06,T-0002,TST-0002,Inicio de sesión exitoso,E
+14,2026-10-20 08:05:09,T-0002,TST-0002,Solicitud de recurso,S
+15,2026-10-20 08:05:12,T-0002,TST-0002,Visualización de información pública,V
+16,2026-10-20 08:05:15,T-0002,TST-0002,Permiso concedido,A
+17,2026-10-20 08:05:18,T-0002,TST-0002,Solicitud de recurso,S
+18,2026-10-20 08:05:21,T-0002,TST-0002,Visualización de información pública,V
+19,2026-10-20 08:05:24,T-0002,TST-0002,Permiso concedido,A
+20,2026-10-20 08:05:27,T-0002,TST-0002,Solicitud de recurso,S
+21,2026-10-20 08:05:30,T-0002,TST-0002,Permiso concedido,A
+22,2026-10-20 08:05:33,T-0002,TST-0002,Solicitud de recurso,S
+23,2026-10-20 08:05:36,T-0002,TST-0002,Permiso concedido,A
+24,2026-10-20 08:05:39,T-0002,TST-0002,Cierre de sesión,C
+25,2026-10-20 08:10:00,T-0003,TST-0003,Inicio de sesión fallido,F
+26,2026-10-20 08:10:03,T-0003,TST-0003,Inicio de sesión fallido,F
+27,2026-10-20 08:10:06,T-0003,TST-0003,Inicio de sesión exitoso,E
+28,2026-10-20 08:10:09,T-0003,TST-0003,Visualización de información pública,V
+29,2026-10-20 08:10:12,T-0003,TST-0003,Solicitud de recurso,S
+30,2026-10-20 08:10:15,T-0003,TST-0003,Acceso denegado,D
+31,2026-10-20 08:10:18,T-0003,TST-0003,Solicitud de recurso,S
+32,2026-10-20 08:10:21,T-0003,TST-0003,Permiso concedido,A
+33,2026-10-20 08:10:24,T-0003,TST-0003,Cierre de sesión,C
+34,2026-10-20 08:15:00,T-0004,TST-0004,Inicio de sesión fallido,F
+35,2026-10-20 08:15:03,T-0004,TST-0004,Inicio de sesión fallido,F
+36,2026-10-20 08:15:06,T-0004,TST-0004,Inicio de sesión exitoso,E
+37,2026-10-20 08:15:09,T-0004,TST-0004,Solicitud de recurso,S
+38,2026-10-20 08:15:12,T-0004,TST-0004,Acceso denegado,D
+39,2026-10-20 08:15:15,T-0004,TST-0004,Solicitud de recurso,S
+40,2026-10-20 08:15:18,T-0004,TST-0004,Acceso denegado,D
+41,2026-10-20 08:15:21,T-0004,TST-0004,Solicitud de recurso,S
+42,2026-10-20 08:15:24,T-0004,TST-0004,Acceso denegado,D
+43,2026-10-20 08:15:27,T-0004,TST-0004,Acceso denegado,D
+44,2026-10-20 08:15:30,T-0004,TST-0004,Cierre de sesión,C
+45,2026-10-20 08:20:00,T-0005,TST-0005,Inicio de sesión fallido,F
+46,2026-10-20 08:20:03,T-0005,TST-0005,Inicio de sesión fallido,F
+47,2026-10-20 08:20:06,T-0005,TST-0005,Inicio de sesión fallido,F
+48,2026-10-20 08:20:09,T-0005,TST-0005,Inicio de sesión fallido,F
+49,2026-10-20 08:20:12,T-0005,TST-0005,Visualización de información pública,V
+50,2026-10-20 08:20:15,T-0005,TST-0005,Inicio de sesión exitoso,E
+51,2026-10-20 08:20:18,T-0005,TST-0005,Solicitud de recurso,S
+52,2026-10-20 08:20:21,T-0005,TST-0005,Acceso denegado,D
+53,2026-10-20 08:20:24,T-0005,TST-0005,Visualización de información pública,V
+54,2026-10-20 08:20:27,T-0005,TST-0005,Cierre de sesión,C
+55,2026-10-20 08:25:00,T-0006,TST-0006,Inicio de sesión fallido,F
+56,2026-10-20 08:25:03,T-0006,TST-0006,Inicio de sesión fallido,F
+57,2026-10-20 08:25:06,T-0006,TST-0006,Inicio de sesión exitoso,E
+58,2026-10-20 08:25:09,T-0006,TST-0006,Visualización de información pública,V
+59,2026-10-20 08:25:12,T-0006,TST-0006,Solicitud de recurso,S
+60,2026-10-20 08:25:15,T-0006,TST-0006,Visualización de información pública,V
+61,2026-10-20 08:25:18,T-0006,TST-0006,Acceso denegado,D
+62,2026-10-20 08:25:21,T-0006,TST-0006,Solicitud de recurso,S
+63,2026-10-20 08:25:24,T-0006,TST-0006,Permiso concedido,A
+64,2026-10-20 08:25:27,T-0006,TST-0006,Visualización de información pública,V
+65,2026-10-20 08:25:30,T-0006,TST-0006,Cierre de sesión,C
+66,2026-10-20 08:30:00,T-0007,TST-0007,Inicio de sesión fallido,F
+67,2026-10-20 08:30:03,T-0007,TST-0007,Inicio de sesión fallido,F
+68,2026-10-20 08:30:06,T-0007,TST-0007,Inicio de sesión exitoso,E
+69,2026-10-20 08:30:09,T-0007,TST-0007,Solicitud de recurso,S
+70,2026-10-20 08:30:12,T-0007,TST-0007,Permiso concedido,A
+71,2026-10-20 08:30:15,T-0007,TST-0007,Solicitud de recurso,S
+72,2026-10-20 08:30:18,T-0007,TST-0007,Acceso denegado,D
+73,2026-10-20 08:30:21,T-0007,TST-0007,Solicitud de recurso,S
+74,2026-10-20 08:30:24,T-0007,TST-0007,Acceso denegado,D
+75,2026-10-20 08:30:27,T-0007,TST-0007,Solicitud de recurso,S
+76,2026-10-20 08:30:30,T-0007,TST-0007,Visualización de información pública,V
+77,2026-10-20 08:30:33,T-0007,TST-0007,Permiso concedido,A
+78,2026-10-20 08:30:36,T-0007,TST-0007,Visualización de información pública,V
+79,2026-10-20 08:30:39,T-0007,TST-0007,Cierre de sesión,C
+80,2026-10-20 08:35:00,T-0008,TST-0008,Inicio de sesión fallido,F
+81,2026-10-20 08:35:03,T-0008,TST-0008,Inicio de sesión fallido,F
+82,2026-10-20 08:35:06,T-0008,TST-0008,Visualización de información pública,V
+83,2026-10-20 08:35:09,T-0008,TST-0008,Inicio de sesión exitoso,E
+84,2026-10-20 08:35:12,T-0008,TST-0008,Solicitud de recurso,S
+85,2026-10-20 08:35:15,T-0008,TST-0008,Visualización de información pública,V
+86,2026-10-20 08:35:18,T-0008,TST-0008,Permiso concedido,A
+87,2026-10-20 08:35:21,T-0008,TST-0008,Cierre de sesión,C
+88,2026-10-20 08:35:24,T-0008,TST-0008,Visualización de información pública,V
+89,2026-10-20 08:40:00,T-0009,TST-0009,Inicio de sesión fallido,F
+90,2026-10-20 08:40:03,T-0009,TST-0009,Inicio de sesión fallido,F
+91,2026-10-20 08:40:06,T-0009,TST-0009,Inicio de sesión fallido,F
+92,2026-10-20 08:40:09,T-0009,TST-0009,Inicio de sesión exitoso,E
+93,2026-10-20 08:40:12,T-0009,TST-0009,Solicitud de recurso,S
+94,2026-10-20 08:40:15,T-0009,TST-0009,Permiso concedido,A
+95,2026-10-20 08:40:18,T-0009,TST-0009,Solicitud de recurso,S
+96,2026-10-20 08:40:21,T-0009,TST-0009,Permiso concedido,A
+97,2026-10-20 08:40:24,T-0009,TST-0009,Solicitud de recurso,S
+98,2026-10-20 08:40:27,T-0009,TST-0009,Visualización de información pública,V
+99,2026-10-20 08:40:30,T-0009,TST-0009,Acceso denegado,D
+100,2026-10-20 08:40:33,T-0009,TST-0009,Visualización de información pública,V
+101,2026-10-20 08:40:36,T-0009,TST-0009,Solicitud de recurso,S
+102,2026-10-20 08:40:39,T-0009,TST-0009,Permiso concedido,A
+103,2026-10-20 08:40:42,T-0009,TST-0009,Cierre de sesión,C
+104,2026-10-20 08:45:00,T-0010,TST-0010,Inicio de sesión fallido,F
+105,2026-10-20 08:45:03,T-0010,TST-0010,Inicio de sesión fallido,F
+106,2026-10-20 08:45:06,T-0010,TST-0010,Inicio de sesión exitoso,E
+107,2026-10-20 08:45:09,T-0010,TST-0010,Visualización de información pública,V
+108,2026-10-20 08:45:12,T-0010,TST-0010,Solicitud de recurso,S
+109,2026-10-20 08:45:15,T-0010,TST-0010,Acceso denegado,D
+110,2026-10-20 08:45:18,T-0010,TST-0010,Solicitud de recurso,S
+111,2026-10-20 08:45:21,T-0010,TST-0010,Permiso concedido,A
+112,2026-10-20 08:45:24,T-0010,TST-0010,Solicitud de recurso,S
+113,2026-10-20 08:45:27,T-0010,TST-0010,Acceso denegado,D
+114,2026-10-20 08:45:30,T-0010,TST-0010,Solicitud de recurso,S
+115,2026-10-20 08:45:33,T-0010,TST-0010,Acceso denegado,D
+116,2026-10-20 08:45:36,T-0010,TST-0010,Visualización de información pública,V
+117,2026-10-20 08:45:39,T-0010,TST-0010,Cierre de sesión,C
+118,2026-10-20 08:50:00,T-0011,TST-0011,Inicio de sesión exitoso,E
+119,2026-10-20 08:50:03,T-0011,TST-0011,Visualización de información pública,V
+120,2026-10-20 08:50:06,T-0011,TST-0011,Solicitud de recurso,S
+121,2026-10-20 08:50:09,T-0011,TST-0011,Permiso concedido,A
+122,2026-10-20 08:50:12,T-0011,TST-0011,Solicitud de recurso,S
+123,2026-10-20 08:50:15,T-0011,TST-0011,Acceso denegado,D
+124,2026-10-20 08:50:18,T-0011,TST-0011,Solicitud de recurso,S
+125,2026-10-20 08:50:21,T-0011,TST-0011,Permiso concedido,A
+126,2026-10-20 08:50:24,T-0011,TST-0011,Cierre de sesión,C
+127,2026-10-20 08:50:27,T-0011,TST-0011,Visualización de información pública,V
+128,2026-10-20 08:55:00,T-0012,TST-0012,Inicio de sesión fallido,F
+129,2026-10-20 08:55:03,T-0012,TST-0012,Inicio de sesión exitoso,E
+130,2026-10-20 08:55:06,T-0012,TST-0012,Solicitud de recurso,S
+131,2026-10-20 08:55:09,T-0012,TST-0012,Acceso denegado,D
+132,2026-10-20 08:55:12,T-0012,TST-0012,Visualización de información pública,V
+133,2026-10-20 08:55:15,T-0012,TST-0012,Solicitud de recurso,S
+134,2026-10-20 08:55:18,T-0012,TST-0012,Visualización de información pública,V
+135,2026-10-20 08:55:21,T-0012,TST-0012,Acceso denegado,D
+136,2026-10-20 08:55:24,T-0012,TST-0012,Solicitud de recurso,S
+137,2026-10-20 08:55:27,T-0012,TST-0012,Acceso denegado,D
+138,2026-10-20 08:55:30,T-0012,TST-0012,Cierre de sesión,C
+139,2026-10-20 09:00:00,T-0013,TST-0013,Inicio de sesión fallido,F
+140,2026-10-20 09:00:03,T-0013,TST-0013,Inicio de sesión fallido,F
+141,2026-10-20 09:00:06,T-0013,TST-0013,Visualización de información pública,V
+142,2026-10-20 09:00:09,T-0013,TST-0013,Inicio de sesión exitoso,E
+143,2026-10-20 09:00:12,T-0013,TST-0013,Solicitud de recurso,S
+144,2026-10-20 09:00:15,T-0013,TST-0013,Permiso concedido,A
+145,2026-10-20 09:00:18,T-0013,TST-0013,Solicitud de recurso,S
+146,2026-10-20 09:00:21,T-0013,TST-0013,Permiso concedido,A
+147,2026-10-20 09:00:24,T-0013,TST-0013,Solicitud de recurso,S
+148,2026-10-20 09:00:27,T-0013,TST-0013,Acceso denegado,D
+149,2026-10-20 09:00:30,T-0013,TST-0013,Solicitud de recurso,S
+150,2026-10-20 09:00:33,T-0013,TST-0013,Acceso denegado,D
+151,2026-10-20 09:00:36,T-0013,TST-0013,Cierre de sesión,C
+152,2026-10-20 09:05:00,T-0014,TST-0014,Inicio de sesión fallido,F
+153,2026-10-20 09:05:03,T-0014,TST-0014,Inicio de sesión fallido,F
+154,2026-10-20 09:05:06,T-0014,TST-0014,Inicio de sesión exitoso,E
+155,2026-10-20 09:05:09,T-0014,TST-0014,Visualización de información pública,V
+156,2026-10-20 09:05:12,T-0014,TST-0014,Solicitud de recurso,S
+157,2026-10-20 09:05:15,T-0014,TST-0014,Permiso concedido,A
+158,2026-10-20 09:05:18,T-0014,TST-0014,Solicitud de recurso,S
+159,2026-10-20 09:05:21,T-0014,TST-0014,Visualización de información pública,V
+160,2026-10-20 09:05:24,T-0014,TST-0014,Permiso concedido,A
+161,2026-10-20 09:05:27,T-0014,TST-0014,Solicitud de recurso,S
+162,2026-10-20 09:05:30,T-0014,TST-0014,Acceso denegado,D
+163,2026-10-20 09:05:33,T-0014,TST-0014,Solicitud de recurso,S
+164,2026-10-20 09:05:36,T-0014,TST-0014,Acceso denegado,D
+165,2026-10-20 09:05:39,T-0014,TST-0014,Cierre de sesión,C
+166,2026-10-20 09:10:00,T-0015,TST-0015,Inicio de sesión fallido,F
+167,2026-10-20 09:10:03,T-0015,TST-0015,Inicio de sesión fallido,F
+168,2026-10-20 09:10:06,T-0015,TST-0015,Inicio de sesión exitoso,E
+169,2026-10-20 09:10:09,T-0015,TST-0015,Solicitud de recurso,S
+170,2026-10-20 09:10:12,T-0015,TST-0015,Permiso concedido,A
+171,2026-10-20 09:10:15,T-0015,TST-0015,Solicitud de recurso,S
+172,2026-10-20 09:10:18,T-0015,TST-0015,Visualización de información pública,V
+173,2026-10-20 09:10:21,T-0015,TST-0015,Acceso denegado,D
+174,2026-10-20 09:10:24,T-0015,TST-0015,Solicitud de recurso,S
+175,2026-10-20 09:10:27,T-0015,TST-0015,Visualización de información pública,V
+176,2026-10-20 09:10:30,T-0015,TST-0015,Acceso denegado,D
+177,2026-10-20 09:10:33,T-0015,TST-0015,Solicitud de recurso,S
+178,2026-10-20 09:10:36,T-0015,TST-0015,Acceso denegado,D
+179,2026-10-20 09:10:39,T-0015,TST-0015,Cierre de sesión,C
+180,2026-10-20 09:15:00,T-0016,TST-0016,Inicio de sesión fallido,F
+181,2026-10-20 09:15:03,T-0016,TST-0016,Inicio de sesión fallido,F
+182,2026-10-20 09:15:06,T-0016,TST-0016,Inicio de sesión exitoso,E
+183,2026-10-20 09:15:09,T-0016,TST-0016,Solicitud de recurso,S
+184,2026-10-20 09:15:12,T-0016,TST-0016,Acceso denegado,D
+185,2026-10-20 09:15:15,T-0016,TST-0016,Solicitud de recurso,S
+186,2026-10-20 09:15:18,T-0016,TST-0016,Visualización de información pública,V
+187,2026-10-20 09:15:21,T-0016,TST-0016,Acceso denegado,D
+188,2026-10-20 09:15:24,T-0016,TST-0016,Solicitud de recurso,S
+189,2026-10-20 09:15:27,T-0016,TST-0016,Acceso denegado,D
+190,2026-10-20 09:15:30,T-0016,TST-0016,Visualización de información pública,V
+191,2026-10-20 09:15:33,T-0016,TST-0016,Solicitud de recurso,S
+192,2026-10-20 09:15:36,T-0016,TST-0016,Visualización de información pública,V
+193,2026-10-20 09:15:39,T-0016,TST-0016,Acceso denegado,D
+194,2026-10-20 09:15:42,T-0016,TST-0016,Cierre de sesión,C
+195,2026-10-20 09:15:45,T-0016,TST-0016,Visualización de información pública,V
+196,2026-10-20 09:20:00,T-0017,TST-0017,Inicio de sesión fallido,F
+197,2026-10-20 09:20:03,T-0017,TST-0017,Inicio de sesión fallido,F
+198,2026-10-20 09:20:06,T-0017,TST-0017,Inicio de sesión exitoso,E
+199,2026-10-20 09:20:09,T-0017,TST-0017,Solicitud de recurso,S
+200,2026-10-20 09:20:12,T-0017,TST-0017,Acceso denegado,D
+201,2026-10-20 09:20:15,T-0017,TST-0017,Solicitud de recurso,S
+202,2026-10-20 09:20:18,T-0017,TST-0017,Visualización de información pública,V
+203,2026-10-20 09:20:21,T-0017,TST-0017,Permiso concedido,A
+204,2026-10-20 09:20:24,T-0017,TST-0017,Visualización de información pública,V
+205,2026-10-20 09:20:27,T-0017,TST-0017,Cierre de sesión,C
+206,2026-10-20 09:25:00,T-0018,TST-0018,Inicio de sesión exitoso,E
+207,2026-10-20 09:25:03,T-0018,TST-0018,Solicitud de recurso,S
+208,2026-10-20 09:25:06,T-0018,TST-0018,Permiso concedido,A
+209,2026-10-20 09:25:09,T-0018,TST-0018,Solicitud de recurso,S
+210,2026-10-20 09:25:12,T-0018,TST-0018,Permiso concedido,A
+211,2026-10-20 09:25:15,T-0018,TST-0018,Solicitud de recurso,S
+212,2026-10-20 09:25:18,T-0018,TST-0018,Acceso denegado,D
+213,2026-10-20 09:25:21,T-0018,TST-0018,Cierre de sesión,C
+214,2026-10-20 09:30:00,T-0019,TST-0019,Inicio de sesión fallido,F
+215,2026-10-20 09:30:03,T-0019,TST-0019,Inicio de sesión fallido,F
+216,2026-10-20 09:30:06,T-0019,TST-0019,Inicio de sesión exitoso,E
+217,2026-10-20 09:30:09,T-0019,TST-0019,Solicitud de recurso,S
+218,2026-10-20 09:30:12,T-0019,TST-0019,Permiso concedido,A
+219,2026-10-20 09:30:15,T-0019,TST-0019,Solicitud de recurso,S
+220,2026-10-20 09:30:18,T-0019,TST-0019,Permiso concedido,A
+221,2026-10-20 09:30:21,T-0019,TST-0019,Visualización de información pública,V
+222,2026-10-20 09:30:24,T-0019,TST-0019,Solicitud de recurso,S
+223,2026-10-20 09:30:27,T-0019,TST-0019,Acceso denegado,D
+224,2026-10-20 09:30:30,T-0019,TST-0019,Solicitud de recurso,S
+225,2026-10-20 09:30:33,T-0019,TST-0019,Permiso concedido,A
+226,2026-10-20 09:30:36,T-0019,TST-0019,Visualización de información pública,V
+227,2026-10-20 09:30:39,T-0019,TST-0019,Cierre de sesión,C
+228,2026-10-20 09:35:00,T-0020,TST-0020,Inicio de sesión fallido,F
+229,2026-10-20 09:35:03,T-0020,TST-0020,Inicio de sesión fallido,F
+230,2026-10-20 09:35:06,T-0020,TST-0020,Inicio de sesión exitoso,E
+231,2026-10-20 09:35:09,T-0020,TST-0020,Solicitud de recurso,S
+232,2026-10-20 09:35:12,T-0020,TST-0020,Acceso denegado,D
+233,2026-10-20 09:35:15,T-0020,TST-0020,Solicitud de recurso,S
+234,2026-10-20 09:35:18,T-0020,TST-0020,Acceso denegado,D
+235,2026-10-20 09:35:21,T-0020,TST-0020,Cierre de sesión,C
+236,2026-10-20 09:40:00,T-0021,TST-0021,Inicio de sesión fallido,F
+237,2026-10-20 09:40:03,T-0021,TST-0021,Inicio de sesión fallido,F
+238,2026-10-20 09:40:06,T-0021,TST-0021,Inicio de sesión exitoso,E
+239,2026-10-20 09:40:09,T-0021,TST-0021,Visualización de información pública,V
+240,2026-10-20 09:40:12,T-0021,TST-0021,Solicitud de recurso,S
+241,2026-10-20 09:40:15,T-0021,TST-0021,Visualización de información pública,V
+242,2026-10-20 09:40:18,T-0021,TST-0021,Permiso concedido,A
+243,2026-10-20 09:40:21,T-0021,TST-0021,Visualización de información pública,V
+244,2026-10-20 09:40:24,T-0021,TST-0021,Solicitud de recurso,S
+245,2026-10-20 09:40:27,T-0021,TST-0021,Visualización de información pública,V
+246,2026-10-20 09:40:30,T-0021,TST-0021,Acceso denegado,D
+247,2026-10-20 09:40:33,T-0021,TST-0021,Solicitud de recurso,S
+248,2026-10-20 09:40:36,T-0021,TST-0021,Acceso denegado,D
+249,2026-10-20 09:40:39,T-0021,TST-0021,Cierre de sesión,C
+250,2026-10-20 09:45:00,T-0022,TST-0022,Inicio de sesión fallido,F
+251,2026-10-20 09:45:03,T-0022,TST-0022,Inicio de sesión fallido,F
+252,2026-10-20 09:45:06,T-0022,TST-0022,Inicio de sesión exitoso,E
+253,2026-10-20 09:45:09,T-0022,TST-0022,Solicitud de recurso,S
+254,2026-10-20 09:45:12,T-0022,TST-0022,Permiso concedido,A
+255,2026-10-20 09:45:15,T-0022,TST-0022,Visualización de información pública,V
+256,2026-10-20 09:45:18,T-0022,TST-0022,Solicitud de recurso,S
+257,2026-10-20 09:45:21,T-0022,TST-0022,Acceso denegado,D
+258,2026-10-20 09:45:24,T-0022,TST-0022,Cierre de sesión,C
+259,2026-10-20 09:50:00,T-0023,TST-0023,Inicio de sesión fallido,F
+260,2026-10-20 09:50:03,T-0023,TST-0023,Inicio de sesión fallido,F
+261,2026-10-20 09:50:06,T-0023,TST-0023,Inicio de sesión exitoso,E
+262,2026-10-20 09:50:09,T-0023,TST-0023,Solicitud de recurso,S
+263,2026-10-20 09:50:12,T-0023,TST-0023,Permiso concedido,A
+264,2026-10-20 09:50:15,T-0023,TST-0023,Visualización de información pública,V
+265,2026-10-20 09:50:18,T-0023,TST-0023,Solicitud de recurso,S
+266,2026-10-20 09:50:21,T-0023,TST-0023,Acceso denegado,D
+267,2026-10-20 09:50:24,T-0023,TST-0023,Cierre de sesión,C
+268,2026-10-20 09:50:27,T-0023,TST-0023,Visualización de información pública,V
+269,2026-10-20 09:55:00,T-0024,TST-0024,Inicio de sesión fallido,F
+270,2026-10-20 09:55:03,T-0024,TST-0024,Inicio de sesión exitoso,E
+271,2026-10-20 09:55:06,T-0024,TST-0024,Visualización de información pública,V
+272,2026-10-20 09:55:09,T-0024,TST-0024,Solicitud de recurso,S
+273,2026-10-20 09:55:12,T-0024,TST-0024,Permiso concedido,A
+274,2026-10-20 09:55:15,T-0024,TST-0024,Solicitud de recurso,S
+275,2026-10-20 09:55:18,T-0024,TST-0024,Acceso denegado,D
+276,2026-10-20 09:55:21,T-0024,TST-0024,Solicitud de recurso,S
+277,2026-10-20 09:55:24,T-0024,TST-0024,Acceso denegado,D
+278,2026-10-20 09:55:27,T-0024,TST-0024,Visualización de información pública,V
+279,2026-10-20 09:55:30,T-0024,TST-0024,Cierre de sesión,C
+280,2026-10-20 09:55:33,T-0024,TST-0024,Visualización de información pública,V
+281,2026-10-20 10:00:00,T-0025,TST-0025,Inicio de sesión fallido,F
+282,2026-10-20 10:00:03,T-0025,TST-0025,Visualización de información pública,V
+283,2026-10-20 10:00:06,T-0025,TST-0025,Inicio de sesión exitoso,E
+284,2026-10-20 10:00:09,T-0025,TST-0025,Solicitud de recurso,S
+285,2026-10-20 10:00:12,T-0025,TST-0025,Visualización de información pública,V
+286,2026-10-20 10:00:15,T-0025,TST-0025,Permiso concedido,A
+287,2026-10-20 10:00:18,T-0025,TST-0025,Solicitud de recurso,S
+288,2026-10-20 10:00:21,T-0025,TST-0025,Acceso denegado,D
+289,2026-10-20 10:00:24,T-0025,TST-0025,Solicitud de recurso,S
+290,2026-10-20 10:00:27,T-0025,TST-0025,Acceso denegado,D
+291,2026-10-20 10:00:30,T-0025,TST-0025,Solicitud de recurso,S
+292,2026-10-20 10:00:33,T-0025,TST-0025,Visualización de información pública,V
+293,2026-10-20 10:00:36,T-0025,TST-0025,Permiso concedido,A
+294,2026-10-20 10:00:39,T-0025,TST-0025,Cierre de sesión,C
+295,2026-10-20 10:05:00,T-0026,TST-0026,Inicio de sesión exitoso,E
+296,2026-10-20 10:05:03,T-0026,TST-0026,Visualización de información pública,V
+297,2026-10-20 10:05:06,T-0026,TST-0026,Solicitud de recurso,S
+298,2026-10-20 10:05:09,T-0026,TST-0026,Acceso denegado,D
+299,2026-10-20 10:05:12,T-0026,TST-0026,Acceso denegado,D
+300,2026-10-20 10:05:15,T-0026,TST-0026,Visualización de información pública,V
+301,2026-10-20 10:05:18,T-0026,TST-0026,Solicitud de recurso,S
+302,2026-10-20 10:05:21,T-0026,TST-0026,Permiso concedido,A
+303,2026-10-20 10:05:24,T-0026,TST-0026,Cierre de sesión,C
+304,2026-10-20 10:10:00,T-0027,TST-0027,Inicio de sesión fallido,F
+305,2026-10-20 10:10:03,T-0027,TST-0027,Inicio de sesión fallido,F
+306,2026-10-20 10:10:06,T-0027,TST-0027,Inicio de sesión fallido,F
+307,2026-10-20 10:10:09,T-0027,TST-0027,Inicio de sesión fallido,F
+308,2026-10-20 10:10:12,T-0027,TST-0027,Inicio de sesión exitoso,E
+309,2026-10-20 10:10:15,T-0027,TST-0027,Visualización de información pública,V
+310,2026-10-20 10:10:18,T-0027,TST-0027,Solicitud de recurso,S
+311,2026-10-20 10:10:21,T-0027,TST-0027,Permiso concedido,A
+312,2026-10-20 10:10:24,T-0027,TST-0027,Cierre de sesión,C
+313,2026-10-20 10:10:27,T-0027,TST-0027,Visualización de información pública,V
+314,2026-10-20 10:15:00,T-0028,TST-0028,Inicio de sesión exitoso,E
+315,2026-10-20 10:15:03,T-0028,TST-0028,Visualización de información pública,V
+316,2026-10-20 10:15:06,T-0028,TST-0028,Solicitud de recurso,S
+317,2026-10-20 10:15:09,T-0028,TST-0028,Visualización de información pública,V
+318,2026-10-20 10:15:12,T-0028,TST-0028,Acceso denegado,D
+319,2026-10-20 10:15:15,T-0028,TST-0028,Visualización de información pública,V
+320,2026-10-20 10:15:18,T-0028,TST-0028,Solicitud de recurso,S
+321,2026-10-20 10:15:21,T-0028,TST-0028,Acceso denegado,D
+322,2026-10-20 10:15:24,T-0028,TST-0028,Solicitud de recurso,S
+323,2026-10-20 10:15:27,T-0028,TST-0028,Permiso concedido,A
+324,2026-10-20 10:15:30,T-0028,TST-0028,Cierre de sesión,C
+325,2026-10-20 10:15:33,T-0028,TST-0028,Visualización de información pública,V
+326,2026-10-20 10:20:00,T-0029,TST-0029,Inicio de sesión fallido,F
+327,2026-10-20 10:20:03,T-0029,TST-0029,Inicio de sesión fallido,F
+328,2026-10-20 10:20:06,T-0029,TST-0029,Inicio de sesión fallido,F
+329,2026-10-20 10:20:09,T-0029,TST-0029,Inicio de sesión exitoso,E
+330,2026-10-20 10:20:12,T-0029,TST-0029,Solicitud de recurso,S
+331,2026-10-20 10:20:15,T-0029,TST-0029,Acceso denegado,D
+332,2026-10-20 10:20:18,T-0029,TST-0029,Solicitud de recurso,S
+333,2026-10-20 10:20:21,T-0029,TST-0029,Acceso denegado,D
+334,2026-10-20 10:20:24,T-0029,TST-0029,Solicitud de recurso,S
+335,2026-10-20 10:20:27,T-0029,TST-0029,Acceso denegado,D
+336,2026-10-20 10:20:30,T-0029,TST-0029,Solicitud de recurso,S
+337,2026-10-20 10:20:33,T-0029,TST-0029,Acceso denegado,D
+338,2026-10-20 10:20:36,T-0029,TST-0029,Cierre de sesión,C
+339,2026-10-20 10:25:00,T-0030,TST-0030,Inicio de sesión fallido,F
+340,2026-10-20 10:25:03,T-0030,TST-0030,Inicio de sesión exitoso,E
+341,2026-10-20 10:25:06,T-0030,TST-0030,Solicitud de recurso,S
+342,2026-10-20 10:25:09,T-0030,TST-0030,Acceso denegado,D
+343,2026-10-20 10:25:12,T-0030,TST-0030,Solicitud de recurso,S
+344,2026-10-20 10:25:15,T-0030,TST-0030,Visualización de información pública,V
+345,2026-10-20 10:25:18,T-0030,TST-0030,Permiso concedido,A
+346,2026-10-20 10:25:21,T-0030,TST-0030,Cierre de sesión,C
+347,2026-10-20 10:30:00,T-0031,TST-0031,Inicio de sesión fallido,F
+348,2026-10-20 10:30:03,T-0031,TST-0031,Inicio de sesión fallido,F
+349,2026-10-20 10:30:06,T-0031,TST-0031,Inicio de sesión fallido,F
+350,2026-10-20 10:30:09,T-0031,TST-0031,Visualización de información pública,V
+351,2026-10-20 10:30:12,T-0031,TST-0031,Inicio de sesión exitoso,E
+352,2026-10-20 10:30:15,T-0031,TST-0031,Solicitud de recurso,S
+353,2026-10-20 10:30:18,T-0031,TST-0031,Visualización de información pública,V
+354,2026-10-20 10:30:21,T-0031,TST-0031,Permiso concedido,A
+355,2026-10-20 10:30:24,T-0031,TST-0031,Solicitud de recurso,S
+356,2026-10-20 10:30:27,T-0031,TST-0031,Permiso concedido,A
+357,2026-10-20 10:30:30,T-0031,TST-0031,Solicitud de recurso,S
+358,2026-10-20 10:30:33,T-0031,TST-0031,Acceso denegado,D
+359,2026-10-20 10:30:36,T-0031,TST-0031,Solicitud de recurso,S
+360,2026-10-20 10:30:39,T-0031,TST-0031,Acceso denegado,D
+361,2026-10-20 10:30:42,T-0031,TST-0031,Visualización de información pública,V
+362,2026-10-20 10:30:45,T-0031,TST-0031,Cierre de sesión,C
+363,2026-10-20 10:30:48,T-0031,TST-0031,Visualización de información pública,V
+364,2026-10-20 10:35:00,T-0032,TST-0032,Inicio de sesión fallido,F
+365,2026-10-20 10:35:03,T-0032,TST-0032,Inicio de sesión fallido,F
+366,2026-10-20 10:35:06,T-0032,TST-0032,Inicio de sesión exitoso,E
+367,2026-10-20 10:35:09,T-0032,TST-0032,Solicitud de recurso,S
+368,2026-10-20 10:35:12,T-0032,TST-0032,Acceso denegado,D
+369,2026-10-20 10:35:15,T-0032,TST-0032,Solicitud de recurso,S
+370,2026-10-20 10:35:18,T-0032,TST-0032,Permiso concedido,A
+371,2026-10-20 10:35:21,T-0032,TST-0032,Cierre de sesión,C
+372,2026-10-20 10:35:24,T-0032,TST-0032,Visualización de información pública,V
+373,2026-10-20 10:40:00,T-0033,TST-0033,Inicio de sesión fallido,F
+374,2026-10-20 10:40:03,T-0033,TST-0033,Inicio de sesión exitoso,E
+375,2026-10-20 10:40:06,T-0033,TST-0033,Solicitud de recurso,S
+376,2026-10-20 10:40:09,T-0033,TST-0033,Visualización de información pública,V
+377,2026-10-20 10:40:12,T-0033,TST-0033,Acceso denegado,D
+378,2026-10-20 10:40:15,T-0033,TST-0033,Cierre de sesión,C
+379,2026-10-20 10:45:00,T-0034,TST-0034,Inicio de sesión fallido,F
+380,2026-10-20 10:45:03,T-0034,TST-0034,Inicio de sesión exitoso,E
+381,2026-10-20 10:45:06,T-0034,TST-0034,Visualización de información pública,V
+382,2026-10-20 10:45:09,T-0034,TST-0034,Solicitud de recurso,S
+383,2026-10-20 10:45:12,T-0034,TST-0034,Visualización de información pública,V
+384,2026-10-20 10:45:15,T-0034,TST-0034,Permiso concedido,A
+385,2026-10-20 10:45:18,T-0034,TST-0034,Solicitud de recurso,S
+386,2026-10-20 10:45:21,T-0034,TST-0034,Acceso denegado,D
+387,2026-10-20 10:45:24,T-0034,TST-0034,Cierre de sesión,C
+388,2026-10-20 10:50:00,T-0035,TST-0035,Inicio de sesión exitoso,E
+389,2026-10-20 10:50:03,T-0035,TST-0035,Solicitud de recurso,S
+390,2026-10-20 10:50:06,T-0035,TST-0035,Permiso concedido,A
+391,2026-10-20 10:50:09,T-0035,TST-0035,Visualización de información pública,V
+392,2026-10-20 10:50:12,T-0035,TST-0035,Solicitud de recurso,S
+393,2026-10-20 10:50:15,T-0035,TST-0035,Permiso concedido,A
+394,2026-10-20 10:50:18,T-0035,TST-0035,Cierre de sesión,C
+395,2026-10-20 10:55:00,T-0036,TST-0036,Inicio de sesión fallido,F
+396,2026-10-20 10:55:03,T-0036,TST-0036,Inicio de sesión exitoso,E
+397,2026-10-20 10:55:06,T-0036,TST-0036,Solicitud de recurso,S
+398,2026-10-20 10:55:09,T-0036,TST-0036,Acceso denegado,D
+399,2026-10-20 10:55:12,T-0036,TST-0036,Visualización de información pública,V
+400,2026-10-20 10:55:15,T-0036,TST-0036,Cierre de sesión,C
+401,2026-10-20 10:55:18,T-0036,TST-0036,Visualización de información pública,V
+402,2026-10-20 11:00:00,T-0037,TST-0037,Inicio de sesión fallido,F
+403,2026-10-20 11:00:03,T-0037,TST-0037,Inicio de sesión exitoso,E
+404,2026-10-20 11:00:06,T-0037,TST-0037,Solicitud de recurso,S
+405,2026-10-20 11:00:09,T-0037,TST-0037,Permiso concedido,A
+406,2026-10-20 11:00:12,T-0037,TST-0037,Solicitud de recurso,S
+407,2026-10-20 11:00:15,T-0037,TST-0037,Permiso concedido,A
+408,2026-10-20 11:00:18,T-0037,TST-0037,Cierre de sesión,C
+409,2026-10-20 11:05:00,T-0038,TST-0038,Inicio de sesión exitoso,E
+410,2026-10-20 11:05:03,T-0038,TST-0038,Solicitud de recurso,S
+411,2026-10-20 11:05:06,T-0038,TST-0038,Permiso concedido,A
+412,2026-10-20 11:05:09,T-0038,TST-0038,Solicitud de recurso,S
+413,2026-10-20 11:05:12,T-0038,TST-0038,Permiso concedido,A
+414,2026-10-20 11:05:15,T-0038,TST-0038,Solicitud de recurso,S
+415,2026-10-20 11:05:18,T-0038,TST-0038,Permiso concedido,A
+416,2026-10-20 11:05:21,T-0038,TST-0038,Visualización de información pública,V
+417,2026-10-20 11:05:24,T-0038,TST-0038,Solicitud de recurso,S
+418,2026-10-20 11:05:27,T-0038,TST-0038,Visualización de información pública,V
+419,2026-10-20 11:05:30,T-0038,TST-0038,Acceso denegado,D
+420,2026-10-20 11:05:33,T-0038,TST-0038,Cierre de sesión,C
+421,2026-10-20 11:10:00,T-0039,TST-0039,Inicio de sesión fallido,F
+422,2026-10-20 11:10:03,T-0039,TST-0039,Inicio de sesión exitoso,E
+423,2026-10-20 11:10:06,T-0039,TST-0039,Visualización de información pública,V
+424,2026-10-20 11:10:09,T-0039,TST-0039,Solicitud de recurso,S
+425,2026-10-20 11:10:12,T-0039,TST-0039,Acceso denegado,D
+426,2026-10-20 11:10:15,T-0039,TST-0039,Solicitud de recurso,S
+427,2026-10-20 11:10:18,T-0039,TST-0039,Acceso denegado,D
+428,2026-10-20 11:10:21,T-0039,TST-0039,Acceso denegado,D
+429,2026-10-20 11:10:24,T-0039,TST-0039,Visualización de información pública,V
+430,2026-10-20 11:10:27,T-0039,TST-0039,Solicitud de recurso,S
+431,2026-10-20 11:10:30,T-0039,TST-0039,Permiso concedido,A
+432,2026-10-20 11:10:33,T-0039,TST-0039,Cierre de sesión,C
+433,2026-10-20 11:15:00,T-0040,TST-0040,Inicio de sesión exitoso,E
+434,2026-10-20 11:15:03,T-0040,TST-0040,Solicitud de recurso,S
+435,2026-10-20 11:15:06,T-0040,TST-0040,Acceso denegado,D
+436,2026-10-20 11:15:09,T-0040,TST-0040,Acceso denegado,D
+437,2026-10-20 11:15:12,T-0040,TST-0040,Solicitud de recurso,S
+438,2026-10-20 11:15:15,T-0040,TST-0040,Permiso concedido,A
+439,2026-10-20 11:15:18,T-0040,TST-0040,Cierre de sesión,C
+440,2026-10-20 11:20:00,T-0041,TST-0041,Inicio de sesión fallido,F
+441,2026-10-20 11:20:03,T-0041,TST-0041,Inicio de sesión exitoso,E
+442,2026-10-20 11:20:06,T-0041,TST-0041,Solicitud de recurso,S
+443,2026-10-20 11:20:09,T-0041,TST-0041,Visualización de información pública,V
+444,2026-10-20 11:20:12,T-0041,TST-0041,Permiso concedido,A
+445,2026-10-20 11:20:15,T-0041,TST-0041,Solicitud de recurso,S
+446,2026-10-20 11:20:18,T-0041,TST-0041,Acceso denegado,D
+447,2026-10-20 11:20:21,T-0041,TST-0041,Solicitud de recurso,S
+448,2026-10-20 11:20:24,T-0041,TST-0041,Permiso concedido,A
+449,2026-10-20 11:20:27,T-0041,TST-0041,Cierre de sesión,C
+450,2026-10-20 11:25:00,T-0042,TST-0042,Inicio de sesión exitoso,E
+451,2026-10-20 11:25:03,T-0042,TST-0042,Solicitud de recurso,S
+452,2026-10-20 11:25:06,T-0042,TST-0042,Visualización de información pública,V
+453,2026-10-20 11:25:09,T-0042,TST-0042,Permiso concedido,A
+454,2026-10-20 11:25:12,T-0042,TST-0042,Solicitud de recurso,S
+455,2026-10-20 11:25:15,T-0042,TST-0042,Acceso denegado,D
+456,2026-10-20 11:25:18,T-0042,TST-0042,Solicitud de recurso,S
+457,2026-10-20 11:25:21,T-0042,TST-0042,Acceso denegado,D
+458,2026-10-20 11:25:24,T-0042,TST-0042,Cierre de sesión,C
+459,2026-10-20 11:30:00,T-0043,TST-0043,Inicio de sesión exitoso,E
+460,2026-10-20 11:30:03,T-0043,TST-0043,Visualización de información pública,V
+461,2026-10-20 11:30:06,T-0043,TST-0043,Solicitud de recurso,S
+462,2026-10-20 11:30:09,T-0043,TST-0043,Visualización de información pública,V
+463,2026-10-20 11:30:12,T-0043,TST-0043,Permiso concedido,A
+464,2026-10-20 11:30:15,T-0043,TST-0043,Cierre de sesión,C
+465,2026-10-20 11:35:00,T-0044,TST-0044,Inicio de sesión fallido,F
+466,2026-10-20 11:35:03,T-0044,TST-0044,Inicio de sesión exitoso,E
+467,2026-10-20 11:35:06,T-0044,TST-0044,Solicitud de recurso,S
+468,2026-10-20 11:35:09,T-0044,TST-0044,Permiso concedido,A
+469,2026-10-20 11:35:12,T-0044,TST-0044,Solicitud de recurso,S
+470,2026-10-20 11:35:15,T-0044,TST-0044,Visualización de información pública,V
+471,2026-10-20 11:35:18,T-0044,TST-0044,Permiso concedido,A
+472,2026-10-20 11:35:21,T-0044,TST-0044,Solicitud de recurso,S
+473,2026-10-20 11:35:24,T-0044,TST-0044,Permiso concedido,A
+474,2026-10-20 11:35:27,T-0044,TST-0044,Cierre de sesión,C
+475,2026-10-20 11:40:00,T-0045,TST-0045,Inicio de sesión fallido,F
+476,2026-10-20 11:40:03,T-0045,TST-0045,Inicio de sesión fallido,F
+477,2026-10-20 11:40:06,T-0045,TST-0045,Inicio de sesión exitoso,E
+478,2026-10-20 11:40:09,T-0045,TST-0045,Solicitud de recurso,S
+479,2026-10-20 11:40:12,T-0045,TST-0045,Permiso concedido,A
+480,2026-10-20 11:40:15,T-0045,TST-0045,Solicitud de recurso,S
+481,2026-10-20 11:40:18,T-0045,TST-0045,Acceso denegado,D
+482,2026-10-20 11:40:21,T-0045,TST-0045,Visualización de información pública,V
+483,2026-10-20 11:40:24,T-0045,TST-0045,Solicitud de recurso,S
+484,2026-10-20 11:40:27,T-0045,TST-0045,Acceso denegado,D
+485,2026-10-20 11:40:30,T-0045,TST-0045,Solicitud de recurso,S
+486,2026-10-20 11:40:33,T-0045,TST-0045,Permiso concedido,A
+487,2026-10-20 11:40:36,T-0045,TST-0045,Cierre de sesión,C
+488,2026-10-20 11:45:00,T-0046,TST-0046,Inicio de sesión fallido,F
+489,2026-10-20 11:45:03,T-0046,TST-0046,Inicio de sesión fallido,F
+490,2026-10-20 11:45:06,T-0046,TST-0046,Inicio de sesión exitoso,E
+491,2026-10-20 11:45:09,T-0046,TST-0046,Solicitud de recurso,S
+492,2026-10-20 11:45:12,T-0046,TST-0046,Acceso denegado,D
+493,2026-10-20 11:45:15,T-0046,TST-0046,Solicitud de recurso,S
+494,2026-10-20 11:45:18,T-0046,TST-0046,Acceso denegado,D
+495,2026-10-20 11:45:21,T-0046,TST-0046,Solicitud de recurso,S
+496,2026-10-20 11:45:24,T-0046,TST-0046,Permiso concedido,A
+497,2026-10-20 11:45:27,T-0046,TST-0046,Cierre de sesión,C
+498,2026-10-20 11:50:00,T-0047,TST-0047,Inicio de sesión fallido,F
+499,2026-10-20 11:50:03,T-0047,TST-0047,Inicio de sesión fallido,F
+500,2026-10-20 11:50:06,T-0047,TST-0047,Inicio de sesión exitoso,E
+501,2026-10-20 11:50:09,T-0047,TST-0047,Solicitud de recurso,S
+502,2026-10-20 11:50:12,T-0047,TST-0047,Acceso denegado,D
+503,2026-10-20 11:50:15,T-0047,TST-0047,Solicitud de recurso,S
+504,2026-10-20 11:50:18,T-0047,TST-0047,Permiso concedido,A
+505,2026-10-20 11:50:21,T-0047,TST-0047,Solicitud de recurso,S
+506,2026-10-20 11:50:24,T-0047,TST-0047,Acceso denegado,D
+507,2026-10-20 11:50:27,T-0047,TST-0047,Solicitud de recurso,S
+508,2026-10-20 11:50:30,T-0047,TST-0047,Permiso concedido,A
+509,2026-10-20 11:50:33,T-0047,TST-0047,Cierre de sesión,C
+510,2026-10-20 11:50:36,T-0047,TST-0047,Visualización de información pública,V
+511,2026-10-20 11:55:00,T-0048,TST-0048,Inicio de sesión fallido,F
+512,2026-10-20 11:55:03,T-0048,TST-0048,Inicio de sesión fallido,F
+513,2026-10-20 11:55:06,T-0048,TST-0048,Inicio de sesión exitoso,E
+514,2026-10-20 11:55:09,T-0048,TST-0048,Solicitud de recurso,S
+515,2026-10-20 11:55:12,T-0048,TST-0048,Permiso concedido,A
+516,2026-10-20 11:55:15,T-0048,TST-0048,Solicitud de recurso,S
+517,2026-10-20 11:55:18,T-0048,TST-0048,Permiso concedido,A
+518,2026-10-20 11:55:21,T-0048,TST-0048,Visualización de información pública,V
+519,2026-10-20 11:55:24,T-0048,TST-0048,Solicitud de recurso,S
+520,2026-10-20 11:55:27,T-0048,TST-0048,Acceso denegado,D
+521,2026-10-20 11:55:30,T-0048,TST-0048,Solicitud de recurso,S
+522,2026-10-20 11:55:33,T-0048,TST-0048,Acceso denegado,D
+523,2026-10-20 11:55:36,T-0048,TST-0048,Cierre de sesión,C
+524,2026-10-20 12:00:00,T-0049,TST-0049,Inicio de sesión fallido,F
+525,2026-10-20 12:00:03,T-0049,TST-0049,Inicio de sesión fallido,F
+526,2026-10-20 12:00:06,T-0049,TST-0049,Inicio de sesión exitoso,E
+527,2026-10-20 12:00:09,T-0049,TST-0049,Solicitud de recurso,S
+528,2026-10-20 12:00:12,T-0049,TST-0049,Permiso concedido,A
+529,2026-10-20 12:00:15,T-0049,TST-0049,Cierre de sesión,C
+530,2026-10-20 12:00:18,T-0049,TST-0049,Visualización de información pública,V
+531,2026-10-20 12:05:00,T-0050,TST-0050,Inicio de sesión exitoso,E
+532,2026-10-20 12:05:03,T-0050,TST-0050,Solicitud de recurso,S
+533,2026-10-20 12:05:06,T-0050,TST-0050,Permiso concedido,A
+534,2026-10-20 12:05:09,T-0050,TST-0050,Solicitud de recurso,S
+535,2026-10-20 12:05:12,T-0050,TST-0050,Visualización de información pública,V
+536,2026-10-20 12:05:15,T-0050,TST-0050,Acceso denegado,D
+537,2026-10-20 12:05:18,T-0050,TST-0050,Solicitud de recurso,S
+538,2026-10-20 12:05:21,T-0050,TST-0050,Permiso concedido,A
+539,2026-10-20 12:05:24,T-0050,TST-0050,Visualización de información pública,V
+540,2026-10-20 12:05:27,T-0050,TST-0050,Cierre de sesión,C
